@@ -1,3 +1,9 @@
+<!--
+ * @Description: 
+ * @Date: 2022-11-24 09:38:25
+ * @LastEditTime: 2022-11-25 21:33:26
+ * @FilePath: \vue_test\src\components\MyTable.vue
+-->
 <template>
   <el-table
     :data="tableInfo.tableList"

@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div>one</div>
-    <router-view />
-  </div>
+  <div>系统管理</div>
 </template>
 
 <script>

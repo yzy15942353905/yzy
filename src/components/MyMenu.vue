@@ -1,3 +1,9 @@
+<!--
+ * @Description: 
+ * @Date: 2022-11-25 09:13:04
+ * @LastEditTime: 2022-11-25 22:08:42
+ * @FilePath: \vue_test\src\components\MyMenu.vue
+-->
 <template>
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
@@ -20,7 +26,6 @@
 </template>
 
 <script>
-import { routes } from "../router";
 import MyMenuItem from "./MyMenuItem.vue";
 export default {
   components: {
@@ -32,12 +37,12 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      routes: routes,
-    };
+
+  computed: {
+    routes() {
+      return this.$store.state.userInfo.userRoutes;
+    },
   },
-  computed: {},
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -47,7 +52,7 @@ export default {
     },
   },
   mounted() {
-    console.log(routes);
+    this.$store.dispatch("userInfo/setRoleRoutes");
   },
 };
 </script>
