@@ -1,13 +1,16 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-11-26 16:54:02
+ * @LastEditTime: 2022-11-27 16:06:44
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
   <div class="header">
     <div class="headerLeft">
-      <div style="width: 200px; height: 100%; background-color: skyblue"></div>
+      <div
+        style="width: 200px; height: 100%; background-color: skyblue"
+        @click="$router.push('/index')"
+      ></div>
       <div class="openOrclose">
         <i
           :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
@@ -19,20 +22,35 @@
         <el-breadcrumb-item
           v-for="breadCrumbItem in breadCrumbList"
           :key="breadCrumbItem.path"
-          :to="breadCrumbItem.path"
         >
           {{ breadCrumbItem.meta.info }}
         </el-breadcrumb-item>
       </el-breadcrumb>
       <div style="padding: 0 50px">
-        {{ curTime }}
+        <i class="el-icon-time" style="font-size: 20px"></i>{{ curTime }}
       </div>
     </div>
     <div style="display: flex; align-items: center">
       <div class="avatar">
-        <el-avatar
-          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-        ></el-avatar>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <el-avatar
+              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            ></el-avatar>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="$router.push('personalInfo')"
+              ><span>个人中心</span></el-dropdown-item
+            >
+            <el-dropdown-item><span>我的购物车</span></el-dropdown-item>
+            <el-dropdown-item><span>我的订单</span></el-dropdown-item>
+            <el-dropdown-item><span>我的收藏</span></el-dropdown-item>
+
+            <el-dropdown-item divided @click.native="logout"
+              >退出登录</el-dropdown-item
+            >
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <div style="padding: 0 50px 0 10px">
         <span>{{ userInfo.userName }}</span>
@@ -51,17 +69,23 @@ export default {
     };
   },
   methods: {
+    // 导航栏展示与隐藏按钮
     closeOrOpen() {
       this.isCollapse = !this.isCollapse;
       this.$emit("closeOrOpen");
     },
+    // 退出登录
+    logout() {
+      // 清除token 个人信息...
+      this.$router.replace("/");
+    },
   },
   computed: {
-    breadCrumbList() {
-      return this.$route.matched;
-    },
     userInfo() {
       return this.$store.state.userInfo.userInfo;
+    },
+    breadCrumbList() {
+      return this.$route.matched;
     },
   },
   mounted() {

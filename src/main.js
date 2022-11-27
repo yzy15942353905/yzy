@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-09 14:40:33
- * @LastEditTime: 2022-11-25 21:37:20
+ * @LastEditTime: 2022-11-27 18:15:30
  * @FilePath: \vue_test\src\main.js
  */
 import Vue from 'vue'
@@ -22,6 +22,9 @@ import commonUtils from './utils/commonUtils'
 Vue.component(MyTable.name, MyTable)
 Vue.use(ElementUI);
 Vue.prototype.$commonUtils = commonUtils
+
+import SlideVerify from 'vue-monoplasty-slide-verify';
+Vue.use(SlideVerify);
 new Vue({
   router,
   store,

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-11-26 17:14:51
+ * @LastEditTime: 2022-11-27 16:24:08
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -13,26 +13,28 @@ export const constantRoutes = [{
         path: "/index",
         component: () => import("@/components"),
         meta: {
-            info: "首页"
+            info: "首页",
+            icon: "el-icon-s-home"
         },
-        children: [{
-
-            name: "one",
-            path: "/one",
-            component: () => import("@/pages/one"),
-            meta: {
-                info: "one"
-            },
-            children: [{
-                name: "two",
-                path: "/two",
-                component: () => import("@/pages/two"),
-                meta: {
-                    info: "two"
-                },
-            }]
-        }, ]
-    }, {
+        children: []
+    },
+    {
+        path: "/",
+        name: "登录",
+        component: () => import("@/components/Login"),
+        meta: {
+            hidden: true
+        }
+    },
+    {
+        path: "/register",
+        name: "注册",
+        component: () => import("@/components/Register"),
+        meta: {
+            hidden: true
+        }
+    },
+    {
         name: "系统管理",
         path: "/systemss",
         redirect: '/index',
@@ -52,7 +54,29 @@ export const constantRoutes = [{
             ]
 
         }]
-    }, {
+    },
+    {
+        path: "/personal",
+        name: "个人中心",
+        component: () => import("@/components"),
+        meta: {
+            hidden: true,
+            info: "个人中心",
+
+        },
+        children: [{
+            path: "/personalInfo",
+            name: "个人信息",
+            component: () => import("@/pages/personalInfo"),
+            meta: {
+
+                info: "个人信息",
+
+            }
+        }]
+    },
+
+    {
         path: "/404",
         name: "404",
         component: () => import("@/components/404"),

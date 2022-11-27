@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:42:21
- * @LastEditTime: 2022-11-26 16:23:17
+ * @LastEditTime: 2022-11-27 00:07:12
  * @FilePath: \vue_test\src\utils\commonUtils.js
  */
 /*
@@ -111,12 +111,6 @@ export default {
         let M = date.getMonth + 1 <= 9 ? "0" + date.getMonth() + 1 : date.getMonth() + 1
         let D = date.getDate() <= 9 ? "0" + date.getDate() : date.getDate()
         result = Y + tab + M + tab + D
-        if (option && option.week) {
-            let W = date.getDay()
-            let arr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-            result = result + " " + arr[W]
-        }
-
         if (option && option.sfm) {
             let hour = date.getHours() <= 9 ? "0" + date.getHours() : date.getHours()
             let minutes = date.getMinutes() <= 9 ? "0" + date.getMinutes() : date.getMinutes()
@@ -124,9 +118,25 @@ export default {
             let sfm = `${hour}:${minutes}:${seconds}`
             result = result + " " + sfm
         }
+        if (option && option.week) {
+            let W = date.getDay()
+            let arr = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+            result = result + " " + arr[W]
+        }
+
+
         return result
     },
-
-
+    /**
+     * @description: 
+     * 深拷贝
+     * @event: 
+     * object
+     * @return {*}
+     * deepObject
+     */
+    deepCopy(obj) {
+        return JSON.parse(JSON.stringify(obj))
+    }
 
 }

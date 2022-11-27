@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-11-25 21:41:05
+ * @LastEditTime: 2022-11-27 15:48:54
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -14,7 +14,14 @@
         <MyMenu :isCollapse="isCollapse" />
       </div>
       <el-col class="main">
-        <div style="padding: 10px; background-color: #f8f8f8; min-height: 96%">
+        <div
+          style="
+            padding: 15px;
+            background-color: #f8f8f8;
+            box-sizing: border-box;
+            min-height: calc(100%);
+          "
+        >
           <transition name="fade-transform" mode="out-in">
             <router-view></router-view>
           </transition>
@@ -57,7 +64,6 @@ export default {
   background-color: #eee;
   position: relative;
   overflow-x: hidden;
-  overflow-y: scroll;
 }
 .bottom {
   height: calc(100% - 60px) !important;

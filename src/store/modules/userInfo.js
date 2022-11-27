@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-11-26 17:18:03
+ * @LastEditTime: 2022-11-27 00:27:24
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 /*
@@ -19,7 +19,11 @@ import {
 const state = {
     // 用户信息
     userInfo: {
-        userName: "张三"
+        userName: "张三",
+        phoneNumber: "159****3905",
+        address: "沈阳市皇姑区",
+        sex: "男",
+        personalProfile: ""
     },
     // 用户路由
     userRoutes: []
@@ -27,9 +31,14 @@ const state = {
 const mutations = {
     SETROLEROUTRES(state, userRoutes) {
         state.userRoutes = userRoutes
+    },
+    UPDATEUSERINFO(state, userInfo) {
+        state.userInfo = userInfo
     }
+
 }
 const actions = {
+    // 设置权限路由
     setRoleRoutes({
         commit
     }) {
@@ -45,6 +54,12 @@ const actions = {
         router.addRoutes(roleRoutes);
         commit("SETROLEROUTRES", userRoutes)
 
+    },
+    // 修改用户信息
+    updateUserInfo({
+        commit
+    }, userInfo) {
+        commit("UPDATEUSERINFO", JSON.parse(JSON.stringify(userInfo)))
     }
 }
 const getter = {}
