@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-11-27 00:27:24
+ * @LastEditTime: 2022-11-28 00:14:04
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 /*
@@ -11,6 +11,9 @@
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import commonUtils from '@/utils/commonUtils'
+import {
+    login
+} from "@/api/user.js"
 import {
     asyncRoutes,
     constantRoutes,
@@ -50,7 +53,7 @@ const actions = {
             }
             return true
         })
-
+        console.log(123);
         router.addRoutes(roleRoutes);
         commit("SETROLEROUTRES", userRoutes)
 
@@ -60,10 +63,16 @@ const actions = {
         commit
     }, userInfo) {
         commit("UPDATEUSERINFO", JSON.parse(JSON.stringify(userInfo)))
+    },
+    // 登录
+    async login({
+        commit
+    }, userInfo) {
+        let result = await login(userInfo)
+        console.log(result);
     }
 }
 const getter = {}
-
 export default {
     namespaced: true,
     state,

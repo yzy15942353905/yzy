@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2022-11-27 18:36:36
+ * @LastEditTime: 2022-11-28 00:30:41
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -20,13 +20,13 @@
       </div>
       <el-form :model="userForm" :rules="rules" ref="userForm">
         <el-row>
-          <el-form-item prop="username">
+          <el-form-item prop="phoneNumber">
             <el-input
               autofocus
               size="medium"
               style="margin: 10px 0"
               prefix-icon="el-icon-user"
-              v-model="userForm.username"
+              v-model.trim="userForm.username"
             ></el-input> </el-form-item
         ></el-row>
         <el-row>
@@ -36,7 +36,7 @@
               style="margin: 10px 0"
               prefix-icon="el-icon-lock"
               show-password
-              v-model="userForm.password"
+              v-model.trim="userForm.password"
             ></el-input> </el-form-item
         ></el-row>
         <el-row :gutter="50" v-if="safety == 'yzm'"
@@ -46,13 +46,13 @@
                 size="medium"
                 style="margin: 10px 0"
                 prefix-icon="el-icon-lock"
-                v-model="userForm.yzm"
+                v-model.trim="userForm.yzm"
               ></el-input> </el-form-item></el-col
           ><el-col :span="12">
             <div class="get-code" @click="refreshCode()">
               <s-identify :identifyCode="identifyCode"></s-identify>
             </div>
-            <div style="margin: 10px">
+            <div>
               <el-button type="text" @click="refreshCode()"
                 ><i class="el-icon-refresh-left"></i> 看不清？ 换一张</el-button
               >
@@ -98,22 +98,23 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: "请输入手机号", trigger: "blur" },
+
           {
-            min: 3,
-            max: 10,
-            message: "长度在 3 到 10 个字符",
+            pattern: /^1[3|5|7|8|9]\d{9}$/,
+            min: 11,
+            message: "手机号格式不正确",
             trigger: "blur",
           },
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 1,
-            max: 16,
-            message: "长度在 8 到 16 个字符",
-            trigger: "blur",
-          },
+          // {
+          //   min: 1,
+          //   max: 16,
+          //   message: "长度在 8 到 16 个字符",
+          //   trigger: "blur",
+          // },
         ],
       },
     };
@@ -133,6 +134,7 @@ export default {
             this.$message.warning("验证码错误，请重试！");
             return;
           }
+          this.$store.dispatch("userInfo/login", this.userForm);
           // 发post登录请求
           this.$router.replace("/index");
           this.loginSuccess();

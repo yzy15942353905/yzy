@@ -40,7 +40,7 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld.vue";
-import { myFirstAxios } from "./api";
+
 export default {
   name: "App",
   components: {
@@ -104,20 +104,8 @@ export default {
       },
     };
   },
-  methods: {
-    async myFirstAxios() {
-      this.tableInfo.isLoading = true;
-      let result = await myFirstAxios();
-      this.res = result;
-      this.flag = true;
-      this.tableInfo.isLoading = false;
-    },
-    getList(row) {
-      console.log(row);
-    },
-  },
-  created() {
-    // this.myFirstAxios();
+  methods: {},
+  mounted() {
     // $(function () {
     //   luckysheet.create({
     //     container: "luckysheet", // 设定DOM容器的id
