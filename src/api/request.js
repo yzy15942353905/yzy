@@ -14,14 +14,6 @@ import 'nprogress/nprogress.css'
 let request = new axios.create({
     baseURL: "/api",
     timeout: 5000,
-    headers: {
-        get: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-        },
-        post: {
-            'Content-Type': 'application/json;charset=utf-8'
-        }
-    },
 })
 // Add a request interceptor
 request.interceptors.request.use(function (config) {

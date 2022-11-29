@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-11-27 16:24:08
+ * @LastEditTime: 2022-11-28 18:51:32
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -43,7 +43,7 @@ export const constantRoutes = [{
             info: "系统管理"
         },
         children: [{
-            name: "系统管理",
+            name: "系统",
             path: "/system",
             component: () => import("@/pages/system"),
             meta: {
@@ -85,33 +85,51 @@ export const constantRoutes = [{
         }
     },
     // 请务必将此路由放在最后
-    {
-        path: '*',
-        redirect: '/404',
-        meta: {
-            hidden: true
-        }
+    // {
+    //     path: '*',
+    //     redirect: '/404',
+    //     meta: {
+    //         hidden: true
+    //     }
 
-    }
+    // }
 ]
 
 export const asyncRoutes = [{
-    path: "/roleSystem",
-    name: "权限管理",
-    redirect: '/index',
-    component: () => import("@/components"),
-    meta: {
-        info: "权限管理"
-    },
-    children: [{
-        path: "/role",
-        name: "权限",
-        component: () => import("@/pages/role"),
+        path: "/roleSystem",
+        name: "权限管理",
+        redirect: '/index',
+        component: () => import("@/components"),
         meta: {
             info: "权限管理"
-        }
-    }],
-}]
+        },
+        children: [{
+            path: "/role",
+            name: "权限",
+            component: () => import("@/pages/role"),
+            meta: {
+                info: "权限管理"
+            }
+        }],
+    },
+    {
+        path: "/userSystem",
+        name: "用户管理",
+        redirect: '/index',
+        component: () => import("@/components"),
+        meta: {
+            info: "用户管理"
+        },
+        children: [{
+            path: "/userList",
+            name: "用户列表",
+            component: () => import("@/pages/userList"),
+            meta: {
+                info: "用户列表"
+            }
+        }],
+    },
+]
 
 export const router = new Router({
     routes: constantRoutes

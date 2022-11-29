@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2022-11-28 00:30:41
+ * @LastEditTime: 2022-11-28 15:31:50
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -20,9 +20,10 @@
       </div>
       <el-form :model="userForm" :rules="rules" ref="userForm">
         <el-row>
-          <el-form-item prop="phoneNumber">
+          <el-form-item prop="username">
             <el-input
               autofocus
+              auto-complete="on"
               size="medium"
               style="margin: 10px 0"
               prefix-icon="el-icon-user"
@@ -33,6 +34,7 @@
           <el-form-item prop="password">
             <el-input
               size="medium"
+              auto-complete="on"
               style="margin: 10px 0"
               prefix-icon="el-icon-lock"
               show-password
@@ -87,7 +89,7 @@ export default {
   components: { SIdentify },
   data() {
     return {
-      safety: "yzm",
+      safety: "yzm.",
       identifyCode: "",
       identifyCodes:
         "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
@@ -122,7 +124,7 @@ export default {
   methods: {
     login() {
       // 表单校验合法
-      this.$refs["userForm"].validate((valid) => {
+      this.$refs["userForm"].validate(async (valid) => {
         if (valid) {
           if (
             this.safety == "yzm" &&
@@ -134,10 +136,19 @@ export default {
             this.$message.warning("验证码错误，请重试！");
             return;
           }
-          this.$store.dispatch("userInfo/login", this.userForm);
+          let result = await this.$store.dispatch(
+            "userInfo/login",
+            this.userForm
+          );
+          console.log("result: ", result);
+          if (result) {
+            this.$router.replace("/index");
+            this.loginSuccess();
+          } else {
+            this.userForm.password = "";
+            this.userForm.yzm = "";
+          }
           // 发post登录请求
-          this.$router.replace("/index");
-          this.loginSuccess();
         } else {
         }
       });
@@ -151,7 +162,7 @@ export default {
         message: h(
           "i",
           { style: "color: green;font-size:20px" },
-          "欢迎  " + this.$store.state.userInfo.userInfo.userName
+          "欢迎  " + this.$store.state.userInfo.userInfo.nickName
         ),
         iconClass: "el-icon-s-promotion",
       });

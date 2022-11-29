@@ -1,18 +1,22 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-11-28 00:14:04
+ * @LastEditTime: 2022-11-28 23:12:59
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
-/*
- * @Description: 
- * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-11-25 21:55:23
- * @FilePath: \vue_test\src\store\modules\userInfo.js
- */
+import store from "@/store"
 import commonUtils from '@/utils/commonUtils'
 import {
-    login
+    setToken
+} from '@/utils/auth'
+
+import {
+    Message
+} from 'element-ui';
+import {
+    login,
+    saveOrUpdate,
+    register
 } from "@/api/user.js"
 import {
     asyncRoutes,
@@ -21,13 +25,7 @@ import {
 } from '@/router'
 const state = {
     // 用户信息
-    userInfo: {
-        userName: "张三",
-        phoneNumber: "159****3905",
-        address: "沈阳市皇姑区",
-        sex: "男",
-        personalProfile: ""
-    },
+    userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
     // 用户路由
     userRoutes: []
 }
@@ -36,7 +34,7 @@ const mutations = {
         state.userRoutes = userRoutes
     },
     UPDATEUSERINFO(state, userInfo) {
-        state.userInfo = userInfo
+        Object.assign(state.userInfo, userInfo)
     }
 
 }
@@ -45,7 +43,8 @@ const actions = {
     setRoleRoutes({
         commit
     }) {
-        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理"])
+
+        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表"])
         let userRoutes = constantRoutes.concat(roleRoutes)
         userRoutes = userRoutes.filter((item) => {
             if (item.meta.hidden) {
@@ -53,23 +52,69 @@ const actions = {
             }
             return true
         })
-        console.log(123);
-        router.addRoutes(roleRoutes);
+        roleRoutes.forEach(roleRoute => {
+            router.addRoute(roleRoute);
+        });
+
+        router.addRoute({
+            path: '*',
+            redirect: '/404',
+            meta: {
+                hidden: true
+            }
+
+        })
         commit("SETROLEROUTRES", userRoutes)
 
     },
     // 修改用户信息
-    updateUserInfo({
+    async updateUserInfo({
         commit
     }, userInfo) {
-        commit("UPDATEUSERINFO", JSON.parse(JSON.stringify(userInfo)))
+
+        let userForm = commonUtils.deepCopy(userInfo)
+        userForm.phone = undefined
+        let result = await saveOrUpdate(userForm)
+        if (result.code == 200) {
+            sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
+            commit("UPDATEUSERINFO", JSON.parse(JSON.stringify(userInfo)))
+            Message.success(result.msg)
+        } else {
+            Message.error(result.msg)
+        }
+
     },
     // 登录
     async login({
         commit
     }, userInfo) {
         let result = await login(userInfo)
-        console.log(result);
+        if (result.code != 200) {
+            Message.error(result.msg)
+            return false
+        } else {
+            setToken(result.data.token)
+            result.data.token = undefined
+            sessionStorage.setItem("userInfo", JSON.stringify(result.data))
+            commit("UPDATEUSERINFO", result.data)
+            return true
+        }
+    },
+    // 注册
+    async register({
+        commit
+    }, userInfo) {
+        console.log(this.$store);
+        let result = await register(userInfo)
+        if (result.code == 200) {
+            return store.dispatch("userInfo/login", {
+                username: userInfo.phone,
+                password: userInfo.password
+            })
+        } {
+            Message.error(result.msg)
+            return false
+        }
     }
 }
 const getter = {}

@@ -13,3 +13,14 @@ code {
     /* 换行 */
     white-space: pre-wrap;
 }
+
+.formstyle {
+    padding: 15px;
+    border: 1px solid #eee;
+}
+
+.formstyle .el-form-item {
+    margin-bottom: 2px;
+    background: #edf6ff;
+    padding: 6px 10px;
+}

@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 16:23:36
- * @LastEditTime: 2022-11-27 23:02:56
+ * @LastEditTime: 2022-11-29 15:08:12
  * @FilePath: \vue_test\src\components\Register.vue
 -->
 
@@ -23,28 +23,28 @@
         ref="userForm"
         label-width="100px"
       >
-        <el-form-item prop="userName" label="用户名">
+        <el-form-item prop="nickName" label="昵称">
           <el-input
             autofocus
             size="medium"
             style="margin: 10px 0"
-            v-model.trim="userForm.userName"
+            v-model.trim="userForm.nickName"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="phoneNumber" label="手机号">
+        <el-form-item prop="phone" label="手机号">
           <el-input
             autofocus
             size="medium"
             style="margin: 10px 0"
-            v-model.trim="userForm.phoneNumber"
+            v-model.trim="userForm.phone"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="phoneNumberYzm" label="手机验证码">
+        <el-form-item prop="phoneYzm" label="手机验证码">
           <el-input
-            autofocus
+            auto-complete="new-password"
             size="medium"
             style="margin: 10px 0"
-            v-model.trim="userForm.phoneNumberYzm"
+            v-model.trim="userForm.phoneYzm"
           >
             <template slot="append"
               ><el-button :disabled="phoneYzmFlag" @click="getPhoneYzm">{{
@@ -55,6 +55,7 @@
         </el-form-item>
         <el-form-item prop="password" label="密码">
           <el-input
+            auto-complete="new-password"
             size="medium"
             style="margin: 10px 0"
             show-password
@@ -106,7 +107,7 @@
 <script>
 import SIdentify from "@/components/SIdentify.vue";
 export default {
-  name: "Login",
+  name: "Register",
   components: { SIdentify },
   data() {
     let checkPwd = (rule, value, callback) => {
@@ -125,25 +126,22 @@ export default {
       // 获取验证码按钮
       phoneYzmFlag: false,
       // 验证形式
-      safety: "yzm",
+      safety: "yzm.",
       // 正确的验证码
       identifyCode: "",
       // 验证码取值
       identifyCodes:
         "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
       userForm: {
-        userName: "",
-        phoneNumber: "",
-        password: "",
+        nickName: "",
+        phone: "",
+
         Password: "",
         yzm: "",
-        phoneNumberYzm: "",
       },
       rules: {
-        userName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-        ],
-        phoneNumber: [
+        nickName: [{ required: true, message: "请输入昵称", trigger: "blur" }],
+        phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
           {
             pattern: /^1[3|5|7|8|9]\d{9}$/,
@@ -152,7 +150,7 @@ export default {
             trigger: "blur",
           },
         ],
-        phoneNumberYzm: [
+        phoneYzm: [
           { required: true, message: "请输入验证码", trigger: "blur" },
         ],
         password: [
@@ -175,7 +173,7 @@ export default {
   methods: {
     register() {
       // 表单校验合法
-      this.$refs["userForm"].validate((valid) => {
+      this.$refs["userForm"].validate(async (valid) => {
         if (valid) {
           if (
             this.safety == "yzm" &&
@@ -187,14 +185,21 @@ export default {
             return;
           }
           // 发post注册请求
-          this.$router.replace("/index");
-          this.loginSuccess();
+          let result = await this.$store.dispatch(
+            "userInfo/register",
+            this.userForm
+          );
+          if (result) {
+            this.$router.replace("/index");
+            this.registerAndLoginSuccess();
+          }
         } else {
+          this.$message.error(result.msg);
         }
       });
     },
     // 注册成功，自动登录提示信息
-    loginSuccess() {
+    registerAndLoginSuccess() {
       const h = this.$createElement;
       this.$notify({
         title: "登录成功！",
@@ -223,10 +228,10 @@ export default {
     },
     // 获取手机验证码
     getPhoneYzm() {
-      if (this.userForm.phoneNumber == "") {
+      if (this.userForm.phone == "") {
         this.$message.warning("请输入手机号！");
         return;
-      } else if (!this.userForm.phoneNumber.match(/^1[3|5|7|8|9]\d{9}$/)) {
+      } else if (!this.userForm.phone.match(/^1[3|5|7|8|9]\d{9}$/)) {
         this.$message.warning("输入的手机号格式不正确！");
         return;
       }
@@ -238,7 +243,7 @@ export default {
         }
       }, 1000);
       this.phoneYzmFlag = true;
-      this.userForm.phoneNumberYzm = (Math.random() + "").slice(-6);
+      this.userForm.phoneYzm = (Math.random() + "").slice(-6);
     },
   },
   mounted() {

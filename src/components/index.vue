@@ -1,6 +1,12 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
+ * @LastEditTime: 2022-11-28 15:31:16
+ * @FilePath: \vue_test\src\components\index.vue
+-->
+<!--
+ * @Description: 
+ * @Date: 2022-11-24 14:44:16
  * @LastEditTime: 2022-11-27 15:48:54
  * @FilePath: \vue_test\src\components\index.vue
 -->
@@ -13,20 +19,7 @@
       <div style="height: 100%; width: auto">
         <MyMenu :isCollapse="isCollapse" />
       </div>
-      <el-col class="main">
-        <div
-          style="
-            padding: 15px;
-            background-color: #f8f8f8;
-            box-sizing: border-box;
-            min-height: calc(100%);
-          "
-        >
-          <transition name="fade-transform" mode="out-in">
-            <router-view></router-view>
-          </transition>
-        </div>
-      </el-col>
+      <el-col class="main"> <AppMain /> </el-col>
     </div>
   </div>
 </template>
@@ -34,10 +27,12 @@
 <script>
 import MyMenu from "./MyMenu.vue";
 import Header from "./Header.vue";
+import AppMain from "./AppMain.vue";
 export default {
   components: {
     Header,
     MyMenu,
+    AppMain,
   },
   data() {
     return {

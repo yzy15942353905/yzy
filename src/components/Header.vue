@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-11-27 16:06:44
+ * @LastEditTime: 2022-11-28 22:42:04
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -34,9 +34,12 @@
       <div class="avatar">
         <el-dropdown>
           <span class="el-dropdown-link">
-            <el-avatar
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            ></el-avatar>
+            <div class="demo-basic--circle">
+              <el-avatar
+                :src="userInfo.avatarUrl"
+                icon="el-icon-user-solid"
+              ></el-avatar>
+            </div>
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="$router.push('personalInfo')"
@@ -53,7 +56,7 @@
         </el-dropdown>
       </div>
       <div style="padding: 0 50px 0 10px">
-        <span>{{ userInfo.userName }}</span>
+        <span>{{ userInfo.nickName }}</span>
       </div>
     </div>
   </div>
@@ -115,7 +118,7 @@ export default {
   height: 100%;
 }
 .header .openOrclose {
-  padding: 50px;
+  padding: 0 50px;
 }
 .header .openOrclose i {
   font-size: 30px;

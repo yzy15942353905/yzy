@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:13:04
- * @LastEditTime: 2022-11-25 22:08:42
+ * @LastEditTime: 2022-11-28 15:48:20
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
@@ -50,9 +50,6 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-  },
-  mounted() {
-    this.$store.dispatch("userInfo/setRoleRoutes");
   },
 };
 </script>

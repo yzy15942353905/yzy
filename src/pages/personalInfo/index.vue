@@ -1,16 +1,35 @@
 <!--
  * @Description: 
  * @Date: 2022-11-26 17:39:41
- * @LastEditTime: 2022-11-27 00:26:22
+ * @LastEditTime: 2022-11-28 22:46:58
  * @FilePath: \vue_test\src\pages\personalInfo\index.vue
 -->
 <template>
   <div>
-    <el-form :model="userInfo" ref="userInfo" label-width="80px" :rules="rules">
+    <el-form :model="userInfo" ref="userForm" label-width="80px" :rules="rules">
       <el-row justify="center" type="flex">
         <el-col :span="12">
-          <el-form-item label="用户名:" prop="userName"
-            ><el-input v-model="userInfo.userName"></el-input
+          <el-form-item label="头像 :" prop="avatar" style="position: relative">
+            <div class="demo-basic--circle">
+              <el-avatar
+                :size="100"
+                :src="userInfo.avatarUrl"
+                icon="el-icon-user-solid"
+                style="font-size: 50px"
+              ></el-avatar>
+            </div>
+            <el-upload
+              style="position: absolute; top: 30px; left: 170px"
+              action="/api/file/upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="昵称 :" prop="nickName"
+            ><el-input v-model="userInfo.nickName"></el-input
           ></el-form-item>
           <el-form-item label="性别:" prop="sex">
             <el-radio-group v-model="userInfo.sex">
@@ -19,7 +38,7 @@
               <el-radio label="保密"></el-radio></el-radio-group
           ></el-form-item>
           <el-form-item label="手机号码:" prop="phoneNumber"
-            ><el-input v-model="userInfo.phoneNumber" disabled></el-input
+            ><el-input v-model="userInfo.phone" disabled></el-input
           ></el-form-item>
           <el-form-item label="地址:" prop="address"
             ><el-input v-model="userInfo.address"></el-input
@@ -48,9 +67,9 @@ export default {
     return {
       userInfo: {},
       rules: {
-        userName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 1, max: 5, message: "长度在 1 到 5 个字", trigger: "blur" },
+        nickName: [
+          { required: true, message: "请输入昵称", trigger: "blur" },
+          { min: 1, max: 20, message: "长度在 1 到 20 个字", trigger: "blur" },
         ],
       },
     };
@@ -58,7 +77,33 @@ export default {
   computed: {},
   methods: {
     updateUserInfo() {
-      this.$store.dispatch("userInfo/updateUserInfo", this.userInfo);
+      this.$refs["userForm"].validate(async (valid) => {
+        if (valid) {
+          let result = this.$store.dispatch(
+            "userInfo/updateUserInfo",
+            this.userInfo
+          );
+        }
+      });
+    },
+    handleAvatarSuccess(res, file) {
+      res.code == 200 && (this.userInfo.avatarUrl = file.response.data);
+      res.code != 200 && this.$message.error(res.msg);
+    },
+    beforeAvatarUpload(file) {
+      const isJP = file.type === "image/jpeg" || file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJP) {
+        this.$message.error("上传头像图片只能是 JPG 或 PNG 格式!");
+      }
+      setTimeout(() => {
+        if (!isLt2M) {
+          this.$message.error("上传头像图片大小不能超过 2MB!");
+        }
+      }, 0);
+
+      return isJP && isLt2M;
     },
   },
   mounted() {

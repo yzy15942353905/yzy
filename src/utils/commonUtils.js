@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:42:21
- * @LastEditTime: 2022-11-27 00:07:12
+ * @LastEditTime: 2022-11-28 15:21:52
  * @FilePath: \vue_test\src\utils\commonUtils.js
  */
 /*
@@ -22,19 +22,18 @@ export default {
      * userRoutes
      */
     getUserRoutes(asyncRoutes, roleRoutes) {
-
         if (Array.isArray(asyncRoutes) || Array.isArray(roleRoutes)) {
             asyncRoutes = asyncRoutes.filter((v) => {
                 if (roleRoutes.indexOf(v.name) != -1) {
 
                     if (v.children && v.children.length != 0) {
 
-                        this.getUserRoutes(v.children, roleRoutes)
+                        v.children = this.getUserRoutes(v.children, roleRoutes)
 
                     }
                     return true
                 }
-                return false
+
             })
             return asyncRoutes
 

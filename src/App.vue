@@ -106,6 +106,8 @@ export default {
   },
   methods: {},
   mounted() {
+    this.$store.dispatch("userInfo/setRoleRoutes");
+
     // $(function () {
     //   luckysheet.create({
     //     container: "luckysheet", // 设定DOM容器的id
