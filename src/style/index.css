@@ -1,3 +1,5 @@
+
+
 code {
     line-height: 1.8;
     font-family: Menlo, Monaco, Consolas, Courier, monospace;
@@ -23,4 +25,20 @@ code {
     margin-bottom: 2px;
     background: #edf6ff;
     padding: 6px 10px;
+}
+
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+    transition: all .5s;
+}
+
+.fade-transform-enter {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.fade-transform-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
 }

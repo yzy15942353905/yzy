@@ -201,6 +201,7 @@ export default {
   list-style-type: none;
   padding: 0 20px;
   cursor: pointer;
+  /* 文字强制一行显示 */
   white-space: nowrap;
 }
 /* .main li:hover {
