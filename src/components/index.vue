@@ -48,9 +48,9 @@ export default {
       };
     },
   },
-  mounted(){
-    this.resize
-  }
+  mounted() {
+    this.resize;
+  },
 };
 </script>
 
@@ -58,6 +58,7 @@ export default {
 .main {
   flex: 1;
   height: 100%;
+  min-height: 500px;
   transition: 0.5s all;
   padding: 10px;
   background-color: #eee;
