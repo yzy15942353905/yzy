@@ -1,19 +1,13 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-11-28 15:31:16
- * @FilePath: \vue_test\src\components\index.vue
--->
-<!--
- * @Description: 
- * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-11-27 15:48:54
+ * @LastEditTime: 2022-12-06 09:13:02
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
   <div style="height: 100%">
     <el-row style="height: 60px; position: relative">
-      <Header @closeOrOpen="closeOrOpen" />
+      <Header @closeOrOpen="closeOrOpen" :isCollapse="isCollapse" />
     </el-row>
     <div class="bottom">
       <div style="height: 100%; width: auto">
@@ -46,6 +40,16 @@ export default {
       this.isCollapse = !this.isCollapse;
       this.meunSpan = this.isCollapse ? 1 : 4;
     },
+    resize() {
+      window.onresize = () => {
+        if (document.body.clientWidth < 1200) {
+          this.isCollapse = true;
+        }
+      };
+    },
+  },
+  mounted() {
+    this.resize();
   },
 };
 </script>

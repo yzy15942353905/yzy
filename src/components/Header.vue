@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-11-28 22:42:04
+ * @LastEditTime: 2022-12-06 09:11:53
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -65,16 +65,16 @@
 <script>
 export default {
   name: "Header",
+  props: ["isCollapse"],
+
   data() {
     return {
-      isCollapse: false,
       curTime: "当前时间",
     };
   },
   methods: {
     // 导航栏展示与隐藏按钮
     closeOrOpen() {
-      this.isCollapse = !this.isCollapse;
       this.$emit("closeOrOpen");
     },
     // 退出登录
