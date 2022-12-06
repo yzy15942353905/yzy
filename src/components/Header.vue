@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-12-06 09:11:53
+ * @LastEditTime: 2022-12-06 09:47:45
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo.userInfo;
+      return this.$store.state.userInfo.userInfo || {};
     },
     breadCrumbList() {
       return this.$route.matched;

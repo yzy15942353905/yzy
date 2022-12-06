@@ -1,11 +1,11 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-06 09:44:27
+ * @LastEditTime: 2022-12-06 10:24:11
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
-  <div style="position: relative">
+  <div style="position: relative; z-index: 999">
     <el-scrollbar class="scrollbar">
       <div class="main">
         <li
@@ -29,18 +29,18 @@
           ></i>
         </li>
       </div>
-      <div class="rightMenu" v-show="rightMenuFlag" ref="rightMenu">
-        <li
-          @click="deleteItem(rightMenuNode, rightMenuNodeIndex)"
-          v-if="!isIndexPage"
-        >
-          关闭当前
-        </li>
-        <li v-show="!isLastNode" @click="closeRight">关闭右侧</li>
-        <li v-show="!isOnlyOne" @click="closeOther">关闭其他</li>
-        <li @click="closeAll">关闭全部</li>
-      </div>
     </el-scrollbar>
+    <div class="rightMenu" v-show="rightMenuFlag" ref="rightMenu">
+      <li
+        @click="deleteItem(rightMenuNode, rightMenuNodeIndex)"
+        v-if="!isIndexPage"
+      >
+        关闭当前
+      </li>
+      <li v-show="!isLastNode" @click="closeRight">关闭右侧</li>
+      <li v-show="!isOnlyOne" @click="closeOther">关闭其他</li>
+      <li @click="closeAll">关闭全部</li>
+    </div>
   </div>
 </template>
 

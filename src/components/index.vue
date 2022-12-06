@@ -48,9 +48,9 @@ export default {
       };
     },
   },
-  mounted() {
-    this.resize();
-  },
+  mounted(){
+    this.resize
+  }
 };
 </script>
 
