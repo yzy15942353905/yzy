@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:13:04
- * @LastEditTime: 2022-11-28 15:48:20
+ * @LastEditTime: 2022-12-07 11:14:57
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
@@ -12,7 +12,7 @@
           ? '.el-menu--collapse el-menu-vertical-demo'
           : 'el-menu-vertical-demo'
       "
-      default-active="1-4-1"
+      :default-active="$route.path"
       class=""
       @open="handleOpen"
       @close="handleClose"

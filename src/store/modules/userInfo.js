@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-11-28 23:12:59
+ * @LastEditTime: 2022-12-07 16:28:18
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -43,7 +43,8 @@ const actions = {
     setRoleRoutes({
         commit
     }) {
-
+        // ["权限管理", "用户管理", "用户列表"]
+        // 后端还没配置 store.state.userInfo.userInfo.asyncRoutes
         let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表"])
         let userRoutes = constantRoutes.concat(roleRoutes)
         userRoutes = userRoutes.filter((item) => {
@@ -88,6 +89,7 @@ const actions = {
     async login({
         commit
     }, userInfo) {
+        console.log(store.state);
         let result = await login(userInfo)
         if (result.code != 200) {
             Message.error(result.msg)

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-06 14:24:16
+ * @LastEditTime: 2022-12-08 09:40:35
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -131,7 +131,18 @@ export const asyncRoutes = [{
 },
 ]
 
-export const router = new Router({
-    routes: constantRoutes
-
+const router = () => new Router({
+    routes: constantRoutes,
+    scrollBehavior(to, from, savedPosition) {
+        {
+            y: 0
+        }
+    }
 })
+export default router()
+
+// 重置路由
+export const resetRoute = () => {
+    let newRoute = router()
+    router.matcher = newRoute.matcher
+}

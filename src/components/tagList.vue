@@ -1,11 +1,11 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-06 10:24:11
+ * @LastEditTime: 2022-12-06 15:28:45
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
-  <div style="position: relative; z-index: 999">
+  <div style="position: relative">
     <el-scrollbar class="scrollbar">
       <div class="main">
         <li

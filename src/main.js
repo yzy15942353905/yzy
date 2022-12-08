@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-09 14:40:33
- * @LastEditTime: 2022-12-06 09:36:31
+ * @LastEditTime: 2022-12-07 15:45:25
  * @FilePath: \vue_test\src\main.js
  */
 import Vue from 'vue'
@@ -21,7 +21,7 @@ import commonUtils from './utils/commonUtils'
 
 Vue.use(ElementUI);
 Vue.prototype.$commonUtils = commonUtils
-
+import './icons' // icon
 import SlideVerify from 'vue-monoplasty-slide-verify';
 Vue.use(SlideVerify);
 

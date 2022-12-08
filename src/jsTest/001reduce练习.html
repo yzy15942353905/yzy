@@ -1,0 +1,41 @@
+<!--
+ * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @Date: 2022-12-06 16:33:36
+ * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @LastEditTime: 2022-12-07 08:45:30
+ * @FilePath: \yzy-2\src\jsTest\001reduce练习.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        let str = "ssssssssaaassssss"
+        // 重复字符串
+        let repeatStr = str.split("").reduce((a, b) =>
+
+            (a[a.length - 1] == b ? 0 : a += b, a)
+
+            , "")
+        console.log(repeatStr);
+
+        // 统计字符出现的个数
+        let countStr = str.split("").reduce((a, b) =>
+
+            (a[b] ? a[b]++ : (a[b] = 1), a)
+
+            , {})
+        console.log(countStr);
+    </script>
+</body>
+
+</html>
