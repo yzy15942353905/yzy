@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-12-07 16:28:18
+ * @LastEditTime: 2022-12-08 16:58:42
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -72,7 +72,7 @@ const actions = {
     async updateUserInfo({
         commit
     }, userInfo) {
-
+        console.log(userInfo);
         let userForm = commonUtils.deepCopy(userInfo)
         userForm.phone = undefined
         let result = await saveOrUpdate(userForm)
@@ -89,7 +89,6 @@ const actions = {
     async login({
         commit
     }, userInfo) {
-        console.log(store.state);
         let result = await login(userInfo)
         if (result.code != 200) {
             Message.error(result.msg)
@@ -98,6 +97,7 @@ const actions = {
             setToken(result.data.token)
             result.data.token = undefined
             sessionStorage.setItem("userInfo", JSON.stringify(result.data))
+            console.log(result.data);
             commit("UPDATEUSERINFO", result.data)
             return true
         }

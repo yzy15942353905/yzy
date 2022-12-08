@@ -1,11 +1,11 @@
 /*
  * @Description: 
  * @Date: 2022-11-10 14:29:28
- * @LastEditTime: 2022-11-28 00:44:57
+ * @LastEditTime: 2022-12-08 16:33:02
  * @FilePath: \vue_test\src\api\request.js
  */
 import axios from 'axios'
-
+import { getToken } from "@/utils/auth"
 import store from '@/store'
 // 引入进度条
 import nprogress from 'nprogress'
@@ -20,15 +20,8 @@ request.interceptors.request.use(function (config) {
     // Do something before request is sent
     //启动进度条
     nprogress.start()
-
-    //请求头中加入临时id
-    // if (store.state.detail.uuid_token) {
-    //     config.headers.userTempId = store.state.detail.uuid_token
-    // }
-    // //加入用户token
-    // if (store.state.user.token) {
-    //     config.headers.token = store.state.user.token
-    // }
+    // 设置token
+    getToken() && (config.headers["token"] = getToken())
     return config;
 }, function (error) {
     // Do something with request error

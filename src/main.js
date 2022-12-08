@@ -1,14 +1,12 @@
 /*
  * @Description: 
  * @Date: 2022-11-09 14:40:33
- * @LastEditTime: 2022-12-07 15:45:25
+ * @LastEditTime: 2022-12-08 16:19:54
  * @FilePath: \vue_test\src\main.js
  */
 import Vue from 'vue'
 import App from './App.vue'
-import {
-  router
-} from './router'
+import { router } from './router'
 import store from './store'
 Vue.config.productionTip = false
 import ElementUI from 'element-ui';

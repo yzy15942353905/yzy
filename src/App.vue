@@ -17,8 +17,7 @@
 <script>
 export default {
   name: "App",
-  components: {
-  },
+  components: {},
   data() {
     return {};
   },
@@ -26,6 +25,7 @@ export default {
   methods: {},
   mounted() {
     this.$store.dispatch("userInfo/setRoleRoutes");
+    console.log(this.$route);
   },
 };
 </script>

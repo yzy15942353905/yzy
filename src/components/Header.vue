@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-12-06 09:47:45
+ * @LastEditTime: 2022-12-08 16:41:56
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { removeToken } from "@/utils/auth";
+import { resetRoute } from "@/router";
 export default {
   name: "Header",
   props: ["isCollapse"],
@@ -80,6 +82,11 @@ export default {
     // 退出登录
     logout() {
       // 清除token 个人信息...
+      removeToken();
+      // 清除标签列表
+      sessionStorage.removeItem("tagList");
+      // 重置路由
+      resetRoute();
       this.$router.replace("/");
     },
   },

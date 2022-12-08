@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-08 09:40:35
+ * @LastEditTime: 2022-12-08 16:53:58
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -11,12 +11,22 @@ Vue.use(Router)
 export const constantRoutes = [{
     name: "首页",
     path: "/index",
-    component: () => import("@/components"),
+    component: () => import("@/components/Layout"),
     meta: {
         info: "首页",
-        icon: "el-icon-s-home"
+        icon: "el-icon-s-home",
     },
-    children: []
+    children: [{
+        name: "首页",
+        path: "/index",
+        component: () => import("@/components"),
+        meta: {
+            info: "首页",
+            icon: "el-icon-s-home",
+            c: true
+        },
+    }
+    ]
 },
 {
     path: "/",
@@ -38,7 +48,7 @@ export const constantRoutes = [{
     name: "系统管理",
     path: "/systemss",
     redirect: '/index',
-    component: () => import("@/components"),
+    component: () => import("@/components/Layout"),
     meta: {
         info: "系统管理"
     },
@@ -58,7 +68,7 @@ export const constantRoutes = [{
 {
     path: "/personal",
     name: "个人中心",
-    component: () => import("@/components"),
+    component: () => import("@/components/Layout"),
     meta: {
         hidden: true,
         info: "个人中心",
@@ -99,7 +109,7 @@ export const asyncRoutes = [{
     path: "/roleSystem",
     name: "权限管理",
     redirect: '/index',
-    component: () => import("@/components"),
+    component: () => import("@/components/Layout"),
     meta: {
         info: "权限管理"
     },
@@ -116,7 +126,7 @@ export const asyncRoutes = [{
     path: "/userSystem",
     name: "用户管理",
     redirect: '/index',
-    component: () => import("@/components"),
+    component: () => import("@/components/Layout"),
     meta: {
         info: "用户管理"
     },
@@ -131,7 +141,7 @@ export const asyncRoutes = [{
 },
 ]
 
-const router = () => new Router({
+const createRouter = () => new Router({
     routes: constantRoutes,
     scrollBehavior(to, from, savedPosition) {
         {
@@ -139,10 +149,10 @@ const router = () => new Router({
         }
     }
 })
-export default router()
+export const router = createRouter()
 
 // 重置路由
 export const resetRoute = () => {
-    let newRoute = router()
+    let newRoute = createRouter()
     router.matcher = newRoute.matcher
 }
