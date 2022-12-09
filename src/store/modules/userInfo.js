@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-12-08 16:58:42
+ * @LastEditTime: 2022-12-09 09:44:56
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -25,7 +25,7 @@ import {
 } from '@/router'
 const state = {
     // 用户信息
-    userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
+    userInfo: JSON.parse(sessionStorage.getItem("userInfo")) || {},
     // 用户路由
     userRoutes: []
 }
@@ -47,12 +47,9 @@ const actions = {
         // 后端还没配置 store.state.userInfo.userInfo.asyncRoutes
         let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表"])
         let userRoutes = constantRoutes.concat(roleRoutes)
-        userRoutes = userRoutes.filter((item) => {
-            if (item.meta.hidden) {
-                return false
-            }
-            return true
-        })
+
+        userRoutes = userRoutesFilter(userRoutes)
+
         roleRoutes.forEach(roleRoute => {
             router.addRoute(roleRoute);
         });
@@ -120,6 +117,22 @@ const actions = {
     }
 }
 const getter = {}
+
+
+const userRoutesFilter = (userRoutes) => {
+    userRoutes = userRoutes.filter((item) => {
+
+        if (item.meta.hidden) {
+            return false
+        }
+        if (item.children && item.children.lenght != 0)
+            item.children = userRoutesFilter(item.children)
+        return true
+    })
+
+    return userRoutes
+
+}
 export default {
     namespaced: true,
     state,

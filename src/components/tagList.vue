@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-06 15:28:45
+ * @LastEditTime: 2022-12-09 15:50:19
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
@@ -193,7 +193,8 @@ export default {
   display: flex;
   justify-content: start;
   align-items: center;
-  height: 60px;
+  height: 40px;
+  margin-bottom: 20px;
 }
 .main li {
   height: 40px;
@@ -203,6 +204,7 @@ export default {
   cursor: pointer;
   /* 文字强制一行显示 */
   white-space: nowrap;
+  transition: all 1s;
 }
 /* .main li:hover {
   background-color: aqua;

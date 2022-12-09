@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-12-08 16:41:56
+ * @LastEditTime: 2022-12-09 09:55:07
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -19,12 +19,14 @@
       </div>
 
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item
-          v-for="breadCrumbItem in breadCrumbList"
-          :key="breadCrumbItem.path"
-        >
-          {{ breadCrumbItem.meta.info }}
-        </el-breadcrumb-item>
+        <template v-for="breadCrumbItem in breadCrumbList">
+          <el-breadcrumb-item
+            :key="breadCrumbItem.path"
+            v-if="!breadCrumbItem.meta.hidden"
+          >
+            {{ breadCrumbItem.meta.info }}
+          </el-breadcrumb-item>
+        </template>
       </el-breadcrumb>
       <div style="padding: 0 50px">
         <i class="el-icon-time" style="font-size: 20px"></i>{{ curTime }}

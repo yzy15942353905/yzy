@@ -1,29 +1,29 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-08 16:53:58
+ * @LastEditTime: 2022-12-09 15:23:17
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { getToken } from "@/utils/auth"
 Vue.use(Router)
 export const constantRoutes = [{
     name: "首页",
-    path: "/index",
+    path: "/Layout",
+    redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
         info: "首页",
         icon: "el-icon-s-home",
+
     },
     children: [{
-        name: "首页",
+        name: "Layout",
         path: "/index",
         component: () => import("@/components"),
         meta: {
-            info: "首页",
-            icon: "el-icon-s-home",
-            c: true
+            icon: "el-icon-s-home", hidden: true
         },
     }
     ]
@@ -156,3 +156,15 @@ export const resetRoute = () => {
     let newRoute = createRouter()
     router.matcher = newRoute.matcher
 }
+
+// router.beforeEach((to, from, next) => {
+//     if (to.name == "登录") {
+//         if (getToken()) {
+//             next('/index')
+//         }
+//         else {
+//             next()
+//         }
+//     } else if (to.name !== '登录' && !getToken()) next({ name: '登录', query: { redirect: to.path } })
+//     else next()
+// })

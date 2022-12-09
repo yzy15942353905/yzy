@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2022-11-28 15:31:50
+ * @LastEditTime: 2022-12-09 13:35:45
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -140,9 +140,9 @@ export default {
             "userInfo/login",
             this.userForm
           );
-          console.log("result: ", result);
+
           if (result) {
-            this.$router.replace("/index");
+            this.$router.replace(this.$route.query.redirect || "/index");
             this.loginSuccess();
           } else {
             this.userForm.password = "";

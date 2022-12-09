@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:13:04
- * @LastEditTime: 2022-12-07 11:14:57
+ * @LastEditTime: 2022-12-09 09:48:27
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
@@ -45,10 +45,10 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      // console.log(key, keyPath);
     },
   },
 };
