@@ -8,7 +8,7 @@
   <div class="header">
     <div class="headerLeft">
       <div
-        style="width: 200px; height: 100%; background-color: skyblue"
+        style="min-width: 200px; height: 100%; background-color: skyblue"
         @click="$router.push('/index')"
       ></div>
       <div class="openOrclose">

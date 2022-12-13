@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-12-06 09:13:02
+ * @LastEditTime: 2022-12-12 13:55:31
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -10,10 +10,10 @@
       <Header @closeOrOpen="closeOrOpen" :isCollapse="isCollapse" />
     </el-row>
     <div class="bottom">
-      <div style="height: 100%; width: auto">
+      <div class="menuClass" ref="menuClass">
         <MyMenu :isCollapse="isCollapse" />
       </div>
-      <el-col class="main"> <AppMain /> </el-col>
+      <el-col class="main" @scroll="mainScroll"> <AppMain /> </el-col>
     </div>
   </div>
 </template>
@@ -30,7 +30,6 @@ export default {
   },
   data() {
     return {
-      meunSpan: 4,
       isCollapse: false,
       text: {},
     };
@@ -38,8 +37,8 @@ export default {
   methods: {
     closeOrOpen() {
       this.isCollapse = !this.isCollapse;
-      this.meunSpan = this.isCollapse ? 1 : 4;
     },
+    // 监控屏幕width  控制菜单伸缩
     resize() {
       window.onresize = () => {
         if (document.body.clientWidth < 1200) {
@@ -47,9 +46,13 @@ export default {
         }
       };
     },
+
+    mainScroll() {
+      console.log(111);
+    },
   },
   mounted() {
-    this.resize;
+    this.resize();
   },
 };
 </script>
@@ -58,7 +61,7 @@ export default {
 .main {
   flex: 1;
   height: 100%;
-  min-height: 500px;
+  min-height: 635px;
   transition: 0.5s all;
   padding: 10px;
   background-color: #eee;
@@ -68,5 +71,11 @@ export default {
 .bottom {
   height: calc(100% - 60px) !important;
   display: flex;
+}
+.menuClass {
+  height: 100%;
+  width: auto;
+  transition: all 0.5;
+  opacity: 1;
 }
 </style>

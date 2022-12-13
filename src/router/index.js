@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-09 15:23:17
+ * @LastEditTime: 2022-12-12 13:57:44
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -108,14 +108,13 @@ export const constantRoutes = [{
 export const asyncRoutes = [{
     path: "/roleSystem",
     name: "权限管理",
-    redirect: '/index',
     component: () => import("@/components/Layout"),
     meta: {
         info: "权限管理"
     },
     children: [{
         path: "/role",
-        name: "权限",
+        name: "权限管理",
         component: () => import("@/pages/role"),
         meta: {
             info: "权限管理"

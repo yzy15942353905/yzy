@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-09 15:50:19
+ * @LastEditTime: 2022-12-12 13:52:18
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
@@ -204,7 +204,7 @@ export default {
   cursor: pointer;
   /* 文字强制一行显示 */
   white-space: nowrap;
-  transition: all 1s;
+  transition: all 0.5s;
 }
 /* .main li:hover {
   background-color: aqua;
