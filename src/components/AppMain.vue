@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-28 15:24:06
- * @LastEditTime: 2022-12-06 10:18:45
+ * @LastEditTime: 2022-12-14 13:36:52
  * @FilePath: \vue_test\src\components\AppMain.vue
 -->
 <template>
@@ -10,10 +10,11 @@
       padding: 15px;
       background-color: #fdfdfd;
       box-sizing: border-box;
-      min-height: calc(100%);
+      min-height: 666px;
     "
   >
     <TagList />
+
     <transition name="fade-transform" mode="out-in">
       <router-view></router-view>
     </transition>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import TagList from "./TagList";
+import TagList from "./TagList.vue";
 export default {
   components: {
     TagList,

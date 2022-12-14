@@ -119,7 +119,7 @@ export const asyncRoutes = [{
         meta: {
             info: "权限管理"
         }
-    }],
+    },],
 },
 {
     path: "/userSystem",

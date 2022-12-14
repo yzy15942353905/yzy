@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:42:21
- * @LastEditTime: 2022-11-28 15:21:52
+ * @LastEditTime: 2022-12-13 16:07:25
  * @FilePath: \vue_test\src\utils\commonUtils.js
  */
 /*
@@ -16,8 +16,7 @@ export default {
      * @description: 
      * 获取用户权限路由
      * @event:  
-     * asyncRoutes 
-     * roleRoutes
+     * asyncRoutes roleRoutes 
      * @return 
      * userRoutes
      */
@@ -76,12 +75,12 @@ export default {
                 const jsonData = JSON.parse(fileReader.result);
                 // 后台信息
                 that.$confirm(jsonData.msg, "提示", {
-                        confirmButtonText: "确定",
-                        showCancelButton: false,
-                        type: "warning",
-                    })
-                    .then(() => {})
-                    .catch(() => {});
+                    confirmButtonText: "确定",
+                    showCancelButton: false,
+                    type: "warning",
+                })
+                    .then(() => { })
+                    .catch(() => { });
             };
             fileReader.readAsText(resData);
         } else {

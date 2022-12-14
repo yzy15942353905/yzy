@@ -1,28 +1,26 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:13:04
- * @LastEditTime: 2022-12-09 09:48:27
+ * @LastEditTime: 2022-12-14 13:58:45
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
-    <el-menu
-      :class="
-        isCollapse
-          ? '.el-menu--collapse el-menu-vertical-demo'
-          : 'el-menu-vertical-demo'
-      "
-      :default-active="$route.path"
-      class=""
-      @open="handleOpen"
-      @close="handleClose"
-      :collapse="isCollapse"
-      style="min-height: 100%; overflow: hidden"
-      router
-    >
-      <MyMenuItem :menu-data="routes" />
-    </el-menu>
-  </el-scrollbar>
+  <el-menu
+    :class="
+      isCollapse
+        ? '.el-menu--collapse el-menu-vertical-demo'
+        : 'el-menu-vertical-demo'
+    "
+    :default-active="$route.path"
+    class=""
+    @open="handleOpen"
+    @close="handleClose"
+    :collapse="isCollapse"
+    style="min-height: 100%; overflow: hidden"
+    router
+  >
+    <MyMenuItem :menu-data="routes" />
+  </el-menu>
 </template>
 
 <script>
