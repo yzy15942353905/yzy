@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-12-14 14:34:44
+ * @LastEditTime: 2022-12-16 14:12:48
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -18,12 +18,12 @@
           <MyMenu :isCollapse="isCollapse" />
         </el-scrollbar>
       </div>
-
       <el-scrollbar
+        ref="scrollbar"
         style="width: 100%; height: 100%"
         wrap-style="overflow-x:hidden;"
       >
-        <div class="main" @scroll="mainScroll">
+        <div class="main">
           <AppMain /></div
       ></el-scrollbar>
     </div>
@@ -60,6 +60,7 @@ export default {
     },
 
     mainScroll: _.throttle(function () {
+      console.log(1);
       this.$refs["menuClass"].style.opacity = 0.5;
       this.$refs["menuClass"].style["transition-duration"] = "3s";
     }, 500),
@@ -72,6 +73,7 @@ export default {
   mounted() {
     this.resize();
     // this.$refs["mainArea"].addEventListener("scroll", this.mainScroll);
+    this.$refs.scrollbar.wrap.onscroll = this.mainScroll;
   },
 };
 </script>

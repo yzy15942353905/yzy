@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:15:51
- * @LastEditTime: 2022-11-26 18:17:14
+ * @LastEditTime: 2022-12-14 16:19:53
  * @FilePath: \vue_test\src\components\MyMenuItem.vue
 -->
 <template>
@@ -13,7 +13,7 @@
         v-if="item.children && item.children.length > 0"
       >
         <template slot="title">
-          <i :class="item.meta.icon"></i>
+          <i :class="item.meta.icon || 'el-icon-warning-outline'"></i>
           <span slot="title">{{ item.name }}</span>
         </template>
         <MyMenuItem :menu-data="item.children" />

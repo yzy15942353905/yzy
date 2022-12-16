@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-12 13:57:44
+ * @LastEditTime: 2022-12-16 10:36:57
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -19,7 +19,7 @@ export const constantRoutes = [{
 
     },
     children: [{
-        name: "Layout",
+        name: "首页",
         path: "/index",
         component: () => import("@/components"),
         meta: {
@@ -50,14 +50,15 @@ export const constantRoutes = [{
     redirect: '/index',
     component: () => import("@/components/Layout"),
     meta: {
-        info: "系统管理"
+        info: "系统管理", icon: "el-icon-setting"
     },
     children: [{
         name: "系统",
         path: "/system",
         component: () => import("@/pages/system"),
         meta: {
-            info: "系统管理"
+            info: "系统管理",
+
         },
         children: [
 
@@ -110,7 +111,8 @@ export const asyncRoutes = [{
     name: "权限管理",
     component: () => import("@/components/Layout"),
     meta: {
-        info: "权限管理"
+        info: "权限管理",
+        icon: "el-icon-open"
     },
     children: [{
         path: "/role",
@@ -127,7 +129,8 @@ export const asyncRoutes = [{
     redirect: '/index',
     component: () => import("@/components/Layout"),
     meta: {
-        info: "用户管理"
+        info: "用户管理",
+        icon: "el-icon-user"
     },
     children: [{
         path: "/userList",

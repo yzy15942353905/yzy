@@ -41,3 +41,6 @@ code {
     transform: translateX(30px);
 }
 
+.el-menu-item.is-active {
+    background-color: #ecf5ff !important;
+}

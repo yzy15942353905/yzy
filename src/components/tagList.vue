@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-12 13:52:18
+ * @LastEditTime: 2022-12-16 13:29:57
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
@@ -17,6 +17,7 @@
           v-for="(tag, index) in tagList"
           :key="tag.path"
           :class="tag.path == $route.fullPath ? 'cur' : ''"
+          :name="tag.name"
           :path="tag.path"
           @click="toRoute($event.target, tag.path)"
         >
@@ -117,8 +118,20 @@ export default {
       this.rightMenuFlag = false;
     },
     openRightMenu(e, index) {
+      let parentNode = [...e.target.parentNode.children];
+      for (let index = 0; index < parentNode.length; index++) {
+        console.log(e.target.getAttribute("path"));
+        console.log(parentNode[index].getAttribute("path"));
+        if (
+          parentNode[index].getAttribute("path") ==
+          e.target.getAttribute("path")
+        ) {
+          this.rightMenuNodeIndex = index;
+          break;
+        }
+      }
       this.rightMenuNode = e;
-      this.rightMenuNodeIndex = index;
+
       this.isIndexPage =
         this.rightMenuNode.target.innerText == "首页" ? true : false;
       this.isLastNode =
@@ -141,7 +154,13 @@ export default {
     },
     closeOther() {
       this.tagList = [{ name: "首页", path: "/index" }];
-      this.$router.push(this.rightMenuNode.target.getAttribute("path"));
+
+      this.rightMenuNode.target.getAttribute("class").includes("cur")
+        ? this.tagList.push({
+            name: this.rightMenuNode.target.getAttribute("name"),
+            path: this.rightMenuNode.target.getAttribute("path"),
+          })
+        : this.$router.push(this.rightMenuNode.target.getAttribute("path"));
     },
     closeRight() {
       let length = this.rightMenuNode.target.parentNode.children.length;
