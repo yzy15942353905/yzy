@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2022-12-16 10:36:57
+ * @LastEditTime: 2023-01-05 15:24:00
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -10,8 +10,7 @@ import { getToken } from "@/utils/auth"
 Vue.use(Router)
 export const constantRoutes = [{
     name: "首页",
-    path: "/Layout",
-    redirect: "/index",
+    path: "/index",
     component: () => import("@/components/Layout"),
     meta: {
         info: "首页",
@@ -46,23 +45,20 @@ export const constantRoutes = [{
 },
 {
     name: "系统管理",
-    path: "/systemss",
+    path: "/systems",
     redirect: '/index',
     component: () => import("@/components/Layout"),
     meta: {
         info: "系统管理", icon: "el-icon-setting"
     },
     children: [{
-        name: "系统",
-        path: "/system",
-        component: () => import("@/pages/system"),
+        name: "修改密码",
+        path: "/alertPassword",
+        component: () => import("@/pages/alertPassword"),
         meta: {
-            info: "系统管理",
+            info: "修改密码",
 
         },
-        children: [
-
-        ]
 
     }]
 },

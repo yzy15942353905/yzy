@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-30 15:57:44
- * @LastEditTime: 2022-12-16 13:29:57
+ * @LastEditTime: 2022-12-16 16:09:07
  * @FilePath: \vue_test\src\components\TagList.vue
 -->
 <template>
@@ -9,7 +9,7 @@
     <el-scrollbar class="scrollbar">
       <div class="main">
         <li
-          @contextmenu.prevent="openRightMenu($event, index)"
+          @contextmenu.prevent="openRightMenu($event)"
           @dragstart="dragstart($event)"
           @dragover.self="dragover($event)"
           @dragend="dragend($event)"
@@ -117,11 +117,9 @@ export default {
     closeMenu() {
       this.rightMenuFlag = false;
     },
-    openRightMenu(e, index) {
+    openRightMenu(e) {
       let parentNode = [...e.target.parentNode.children];
       for (let index = 0; index < parentNode.length; index++) {
-        console.log(e.target.getAttribute("path"));
-        console.log(parentNode[index].getAttribute("path"));
         if (
           parentNode[index].getAttribute("path") ==
           e.target.getAttribute("path")
@@ -168,7 +166,9 @@ export default {
         this.rightMenuNodeIndex + 1,
         length - 1 - this.rightMenuNodeIndex
       );
-      this.$router.push(this.rightMenuNode.target.getAttribute("path"));
+      this.rightMenuNode.target.getAttribute("class").includes("cur")
+        ? ""
+        : this.$router.push(this.rightMenuNode.target.getAttribute("path"));
     },
   },
   computed: {},
@@ -180,9 +180,13 @@ export default {
   watch: {
     $route() {
       let flag = true;
-      this.tagList.forEach((item) => {
-        if (item.path == this.$route.fullPath) flag = false;
-      });
+
+      for (let index = 0; index < this.tagList.length; index++) {
+        if (this.tagList[index].path == this.$route.fullPath) {
+          flag = false;
+          break;
+        }
+      }
       if (flag)
         this.tagList.push({
           name: this.$route.name,

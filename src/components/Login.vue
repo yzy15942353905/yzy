@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2022-12-09 13:35:45
+ * @LastEditTime: 2023-01-05 16:10:05
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -20,14 +20,14 @@
       </div>
       <el-form :model="userForm" :rules="rules" ref="userForm">
         <el-row>
-          <el-form-item prop="username">
+          <el-form-item prop="phone">
             <el-input
               autofocus
               auto-complete="on"
               size="medium"
               style="margin: 10px 0"
               prefix-icon="el-icon-user"
-              v-model.trim="userForm.username"
+              v-model.trim="userForm.phone"
             ></el-input> </el-form-item
         ></el-row>
         <el-row>
@@ -94,12 +94,12 @@ export default {
       identifyCodes:
         "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
       userForm: {
-        username: "",
+        phone: "",
         password: "",
         yzm: "",
       },
       rules: {
-        username: [
+        phone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
 
           {
@@ -142,6 +142,8 @@ export default {
           );
 
           if (result) {
+            this.$store.dispatch("userInfo/setRoleRoutes");
+
             this.$router.replace(this.$route.query.redirect || "/index");
             this.loginSuccess();
           } else {

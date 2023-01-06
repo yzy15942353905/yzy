@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2022-12-16 14:12:48
+ * @LastEditTime: 2022-12-27 10:03:27
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -60,14 +60,13 @@ export default {
     },
 
     mainScroll: _.throttle(function () {
-      console.log(1);
       this.$refs["menuClass"].style.opacity = 0.5;
       this.$refs["menuClass"].style["transition-duration"] = "3s";
     }, 500),
     MenuEnterEvent() {
       this.$refs["menuClass"].style.opacity == 0.5 &&
         ((this.$refs["menuClass"].style.opacity = 1),
-        (this.$refs["menuClass"].style["transition-duration"] = "0.1s"));
+        (this.$refs["menuClass"].style["transition-duration"] = "0.5s"));
     },
   },
   mounted() {

@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2022-12-09 09:55:07
+ * @LastEditTime: 2023-01-05 16:10:38
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -38,7 +38,7 @@
           <span class="el-dropdown-link">
             <div class="demo-basic--circle">
               <el-avatar
-                :src="userInfo.avatarUrl"
+                :src="userInfo.avatar"
                 icon="el-icon-user-solid"
               ></el-avatar>
             </div>

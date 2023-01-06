@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2022-12-09 09:44:56
+ * @LastEditTime: 2023-01-05 14:09:10
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -107,7 +107,7 @@ const actions = {
         let result = await register(userInfo)
         if (result.code == 200) {
             return store.dispatch("userInfo/login", {
-                username: userInfo.phone,
+                phone: userInfo.phone,
                 password: userInfo.password
             })
         } {

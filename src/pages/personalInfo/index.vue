@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-26 17:39:41
- * @LastEditTime: 2022-11-28 22:46:58
+ * @LastEditTime: 2023-01-05 14:42:19
  * @FilePath: \vue_test\src\pages\personalInfo\index.vue
 -->
 <template>
@@ -13,7 +13,7 @@
             <div class="demo-basic--circle">
               <el-avatar
                 :size="100"
-                :src="userInfo.avatarUrl"
+                :src="userInfo.avatar"
                 icon="el-icon-user-solid"
                 style="font-size: 50px"
               ></el-avatar>
@@ -40,13 +40,19 @@
           <el-form-item label="手机号码:" prop="phoneNumber"
             ><el-input v-model="userInfo.phone" disabled></el-input
           ></el-form-item>
+          <el-form-item label="积分:" prop="phoneNumber"
+            ><el-input v-model="userInfo.points" disabled></el-input
+          ></el-form-item>
+          <el-form-item label="信誉度:" prop="phoneNumber"
+            ><el-input v-model="userInfo.credit" disabled></el-input
+          ></el-form-item>
           <el-form-item label="地址:" prop="address"
             ><el-input v-model="userInfo.address"></el-input
           ></el-form-item>
           <el-form-item label="个人简介:" prop="personalProfile"
             ><el-input
               type="textarea"
-              v-model="userInfo.personalProfile"
+              v-model="userInfo.introduction"
               :rows="4"
               resize="none"
             ></el-input></el-form-item
@@ -87,7 +93,8 @@ export default {
       });
     },
     handleAvatarSuccess(res, file) {
-      res.code == 200 && (this.userInfo.avatarUrl = file.response.data);
+      console.log("file.response.data", file.response);
+      res.code == 200 && (this.userInfo.avatar = file.response.data);
       res.code != 200 && this.$message.error(res.msg);
     },
     beforeAvatarUpload(file) {
