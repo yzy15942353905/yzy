@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2023-01-05 16:10:05
+ * @LastEditTime: 2023-01-06 15:49:07
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -142,8 +142,6 @@ export default {
           );
 
           if (result) {
-            this.$store.dispatch("userInfo/setRoleRoutes");
-
             this.$router.replace(this.$route.query.redirect || "/index");
             this.loginSuccess();
           } else {
@@ -157,7 +155,6 @@ export default {
     },
     // 登录成功提示信息
     loginSuccess() {
-      console.log(this.$store.state);
       const h = this.$createElement;
       this.$notify({
         title: "登录成功！",
@@ -190,7 +187,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .wrapper {
   height: 100vh;
   /* 渐变色 */

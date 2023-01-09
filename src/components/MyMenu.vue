@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-25 09:13:04
- * @LastEditTime: 2022-12-14 13:58:45
+ * @LastEditTime: 2023-01-06 15:49:18
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
 }

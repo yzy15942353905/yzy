@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-01-05 14:09:10
+ * @LastEditTime: 2023-01-06 15:38:30
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -91,6 +91,7 @@ const actions = {
             Message.error(result.msg)
             return false
         } else {
+            store.dispatch("userInfo/setRoleRoutes");
             setToken(result.data.token)
             result.data.token = undefined
             sessionStorage.setItem("userInfo", JSON.stringify(result.data))

@@ -81,3 +81,19 @@ code {
     display: flex;
     justify-content: center;
 }
+
+.viewBtn {
+    color: #409ffe;
+}
+
+.editBtn {
+    color: #E6A23C;
+}
+
+.deleteBtn {
+    color: #f56C6C;
+}
+
+.addBtn {
+    color: #67C23A;
+}

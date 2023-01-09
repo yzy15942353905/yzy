@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-01-06 11:01:25
+ * @LastEditTime: 2023-01-06 14:51:04
  * @FilePath: \vue_test\src\pages\userList\index.vue
 -->
 <template>
@@ -73,6 +73,31 @@
       </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="180">
       </el-table-column>
+      <el-table-column fixed="right" label="操作" width="280">
+        <template slot-scope="scope">
+          <el-button
+            @click="lookdDetail(scope.row.id)"
+            class="viewBtn"
+            type="text"
+            icon="el-icon-view"
+            >查看详情</el-button
+          >
+          <el-button
+            @click="deleteById(scope.row.id)"
+            type="text"
+            class="deleteBtn"
+            icon="el-icon-delete"
+            >删除</el-button
+          >
+          <el-button
+            @click="update(scope.row)"
+            type="text"
+            icon="el-icon-edit"
+            class="editBtn"
+            >修改</el-button
+          >
+        </template>
+      </el-table-column>
     </el-table>
     <div class="block pageStyle">
       <el-pagination
@@ -88,7 +113,7 @@
 </template>
 
 <script>
-import { findPage } from "@/api/user.js";
+import { findPage, deleteById, getById, savaOrUpdate } from "@/api/user.js";
 export default {
   data() {
     return {
@@ -128,6 +153,18 @@ export default {
         }
       }
     },
+    async lookdDetail(id) {},
+    async deleteById(id) {
+      let result = await deleteById(id);
+
+      if (result.code == 200) {
+        this.$message.success(result.msg);
+        // this.findPage(1);
+      } else {
+        this.$message.error(result.msg);
+      }
+    },
+    async update() {},
     handleCurrentChange(val) {
       this.findPage(val);
     },

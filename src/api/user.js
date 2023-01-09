@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-10 14:35:12
- * @LastEditTime: 2023-01-05 16:31:34
+ * @LastEditTime: 2023-01-06 14:26:16
  * @FilePath: \vue_test\src\api\user.js
  */
 import request from './request'
@@ -16,7 +16,6 @@ export const login = (data) => {
 }
 // 更新或注册
 export const saveOrUpdate = (data) => {
-
     return request({
         url: "/user",
         method: "post",
@@ -49,5 +48,21 @@ export const alertPassword = (data) => {
         url: "/user/alertPassword",
         method: "post",
         data
+    })
+}
+
+// 根据用户id查询用户详细信息
+export const getById = (id) => {
+    return request({
+        url: `/user/${id}`,
+        method: "get",
+    })
+}
+
+// 根据用户id删除用户
+export const deleteById = (id) => {
+    return request({
+        url: `/user/del/${id}`,
+        method: "post",
     })
 }

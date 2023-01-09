@@ -1,16 +1,19 @@
 /*
  * @Description: 
  * @Date: 2022-11-10 14:29:28
- * @LastEditTime: 2022-12-08 16:33:02
+ * @LastEditTime: 2023-01-09 08:39:52
  * @FilePath: \vue_test\src\api\request.js
  */
 import axios from 'axios'
 import { getToken } from "@/utils/auth"
 import store from '@/store'
+import { router } from '@/router'
 // 引入进度条
 import nprogress from 'nprogress'
 // 引入进度条样式
 import 'nprogress/nprogress.css'
+import { Message } from 'element-ui'
+
 let request = new axios.create({
     baseURL: "/api",
     timeout: 5000,
@@ -33,6 +36,11 @@ request.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     //结束进度条
+    console.log(response);
+    if (response.data.code !== "200") {
+        Message.error(response.data.msg)
+        router.replace('/')
+    }
     nprogress.done();
     return response.data;
 }, function (error) {

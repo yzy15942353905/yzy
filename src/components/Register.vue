@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 16:23:36
- * @LastEditTime: 2022-11-29 15:08:12
+ * @LastEditTime: 2023-01-06 15:49:30
  * @FilePath: \vue_test\src\components\Register.vue
 -->
 
@@ -259,7 +259,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .wrapper {
   height: 100vh;
   /* 渐变色 */
