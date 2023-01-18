@@ -73,9 +73,9 @@ code {
     border-radius: 3px;
 }
 
-.el-row {
+/* .el-row {
     margin-bottom: 10px !important;
-}
+} */
 
 .pageStyle {
     display: flex;
@@ -96,4 +96,8 @@ code {
 
 .addBtn {
     color: #67C23A;
+}
+
+.icon-zihangche {
+    font-size: 22px !important;
 }

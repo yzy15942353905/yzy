@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-01-05 15:24:00
+ * @LastEditTime: 2023-01-18 15:57:09
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -82,7 +82,32 @@ export const constantRoutes = [{
         }
     }]
 },
+{
+    path: "/Layout",
+    name: "自行车租赁",
+    component: () => import("@/components/Layout"),
+    meta: {
+        info: "自行车租赁",
 
+    },
+    children: [{
+        path: "/bicycleList",
+        name: "自行车租赁",
+        component: () => import("@/pages/bicycleList"),
+        meta: {
+            info: "自行车大全",
+            icon: "iconfont icon-zihangche"
+        }
+    }, {
+        path: "/bicycleDetail",
+        name: "自行车详情",
+        component: () => import("@/pages/bicycleList/bicycleDetail"),
+        meta: {
+            info: "自行车详情",
+            icon: "iconfont icon-zihangche"
+        }
+    }]
+},
 {
     path: "/404",
     name: "404",

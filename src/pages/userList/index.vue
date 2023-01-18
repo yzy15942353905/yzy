@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-01-06 14:51:04
+ * @LastEditTime: 2023-01-16 13:46:41
  * @FilePath: \vue_test\src\pages\userList\index.vue
 -->
 <template>
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { findPage, deleteById, getById, savaOrUpdate } from "@/api/user.js";
+import { findPage, deleteById, getById, savaOrUpdate } from "@/api/modules/user.js";
 export default {
   data() {
     return {

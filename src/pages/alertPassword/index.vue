@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { alertPassword } from "@/api/user.js";
+import { alertPassword } from "@/api/modules/user.js";
 export default {
   data() {
     let checkPwd = (rule, value, callback) => {

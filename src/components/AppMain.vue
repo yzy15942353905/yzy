@@ -1,14 +1,13 @@
 <!--
  * @Description: 
  * @Date: 2022-11-28 15:24:06
- * @LastEditTime: 2022-12-15 16:52:25
+ * @LastEditTime: 2023-01-18 10:42:51
  * @FilePath: \vue_test\src\components\AppMain.vue
 -->
 <template>
   <div
     style="
       padding: 15px;
-      background-color: #fdfdfd;
       box-sizing: border-box;
       min-height: 666px;
     "

@@ -106,6 +106,7 @@
 
 <script>
 import SIdentify from "@/components/SIdentify.vue";
+
 export default {
   name: "Register",
   components: { SIdentify },

@@ -1,11 +1,12 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-01-06 15:38:30
+ * @LastEditTime: 2023-01-17 14:32:59
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
 import commonUtils from '@/utils/commonUtils'
+import md5 from "js-md5";
 import {
     setToken
 } from '@/utils/auth'
@@ -17,7 +18,7 @@ import {
     login,
     saveOrUpdate,
     register
-} from "@/api/user.js"
+} from "@/api/modules/user.js"
 import {
     asyncRoutes,
     constantRoutes,
@@ -69,7 +70,7 @@ const actions = {
     async updateUserInfo({
         commit
     }, userInfo) {
-        console.log(userInfo);
+        // console.log(userInfo);
         let userForm = commonUtils.deepCopy(userInfo)
         userForm.phone = undefined
         let result = await saveOrUpdate(userForm)
@@ -86,7 +87,10 @@ const actions = {
     async login({
         commit
     }, userInfo) {
-        let result = await login(userInfo)
+        let form = JSON.parse(JSON.stringify(userInfo))
+
+        // !userInfo.type && (form.password = md5(form.password))
+        let result = await login(form)
         if (result.code != 200) {
             Message.error(result.msg)
             return false
@@ -104,10 +108,15 @@ const actions = {
     async register({
         commit
     }, userInfo) {
-        console.log(this.$store);
-        let result = await register(userInfo)
+        // console.log(this.$store);
+        let form = JSON.parse(JSON.stringify(userInfo))
+        // md5加密
+        // form.password = md5(form.password)
+
+        let result = await register(form)
         if (result.code == 200) {
             return store.dispatch("userInfo/login", {
+                type: "register",
                 phone: userInfo.phone,
                 password: userInfo.password
             })

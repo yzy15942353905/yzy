@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-10 14:29:28
- * @LastEditTime: 2023-01-09 08:39:52
+ * @LastEditTime: 2023-01-18 16:11:12
  * @FilePath: \vue_test\src\api\request.js
  */
 import axios from 'axios'
@@ -36,7 +36,6 @@ request.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     //结束进度条
-    console.log(response);
     if (response.data.code !== "200") {
         Message.error(response.data.msg)
         router.replace('/')
