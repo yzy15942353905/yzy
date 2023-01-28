@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-17 14:35:43
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-01-28 13:56:11
+ * @LastEditTime: 2023-01-28 14:13:52
  * @FilePath: \yzy-2\src\pages\bicycleList\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -29,14 +29,14 @@
         :span="6"
         v-for="(bicycle, index) in bicycleList"
         :key="bicycle.id"
-        :offset="index > 0 ? 2 : 0"
+        :offset="index > 0 ? 1 : 0"
       >
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img
-            
             :src="bicycle.bicycleImage"
-            class="image"
+            class="image img"
             @error="setDefaultImage"
+            @click="lookdDetail(bicycle.bicycleId)"
           />
 
           <div style="padding: 14px">
@@ -175,28 +175,9 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  flex-wrap: wrap;
-}
-li {
-  background-color: #ffffff;
-  box-sizing: content-box;
-  width: 18%;
-  aspect-ratio: 1/1.2;
-  margin-top: 10px;
-  margin-right: 20px;
-}
 .bicycle_img {
   height: 75%;
   width: 100%;
-}
-img {
-  margin: 20px;
-  width: 80%;
-  height: 80%;
 }
 .bicycleDetail {
   padding: 10px;
@@ -225,5 +206,30 @@ img {
 }
 .bicycle_price {
   color: #ff6700;
+}
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 0;
+  float: right;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
 }
 </style>

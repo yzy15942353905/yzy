@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-18 15:52:06
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-01-28 10:28:57
+ * @LastEditTime: 2023-01-28 16:37:46
  * @FilePath: \yzy-2\src\pages\bicycleList\bicycleDetail.vue
  * @Description: 自行车详情页
 -->
@@ -35,7 +35,7 @@
                 </div>
                 <div class="price">
                   <i>¥</i>
-                  <em>{{ bicycleInfo.price }}</em>
+                  <em>{{ price + type }}</em>
                   <span>降价通知</span>
                 </div>
                 <div class="remark">
@@ -46,50 +46,39 @@
             </div>
           </div>
 
-          <!-- <div class="choose">
+          <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl
-                v-for="(spuSaleAttr, index) in spuSaleAttrList"
-                :key="spuSaleAttr.id"
-              >
-                <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
+              <dl>
+                <dt class="title">租赁方式</dt>
                 <dd
-                  changepirce="0"
-                  :class="{ active: spuSaleAttrValue.isChecked == 1 }"
-                  v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
-                  :key="spuSaleAttrValue.id"
-                  @click="
-                    selectSpuSaleAttr({
-                      sid: spuSaleAttrValue.id,
-                      index: index,
-                    })
+                  :class="
+                    currentIndex === index ? 'chooseDd active' : 'chooseDd'
                   "
+                  v-for="(spuSaleAttr, index) in spuSaleAttrList"
+                  :key="spuSaleAttr.type"
+                  @click="selectSpuSale(spuSaleAttr, index)"
                 >
-                  {{ spuSaleAttrValue.saleAttrValueName }}
+                  {{ spuSaleAttr.title }}
                 </dd>
               </dl>
             </div>
-            <div class="cartWrap">
-              <div class="controls">
-                <input autocomplete="off" class="itxt" v-model="num" />
-                <button href="javascript:" class="plus" @click="num++">
-                  +
-                </button>
-                <button
-                  href="javascript:"
-                  class="mins"
-                  @click="num--"
-                  :disabled="num == 1"
-                >
-                  -
-                </button>
-              </div>
-              <div class="add">
-                <a href="javascript:" @click="addShopCart">加入购物车</a>
+            <div>
+              <div>
+                <el-input-number
+                  v-model="num"
+                  :min="1"
+                  label="描述文字"
+                ></el-input-number>
+                <div style="margin-top: 20px">
+                  <div>总价 {{ num * this.price }} 元</div>
+                </div>
+                <div style="margin-top: 20px">
+                  <el-button type="danger">点我下单</el-button>
+                </div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
     </section>
@@ -109,6 +98,11 @@ export default {
     return {
       bicycleId: undefined,
       bicycleInfo: {},
+      price: undefined,
+      type: "/时",
+      currentIndex: 0,
+      num: 1,
+      spuSaleAttrList: [],
     };
   },
   methods: {
@@ -116,9 +110,41 @@ export default {
       let result = await getById(bicycleId);
       if (result.code == 200) {
         this.bicycleInfo = result.data;
+        // 默认价格取时价，因为便宜
+        this.price = this.bicycleInfo.priceHour;
+        // 获取三种租赁类型价格
+        this.spuSaleAttrList.push({
+          type: "/时",
+          title: "按小时",
+          price: result.data.priceHour,
+        });
+        this.spuSaleAttrList.push({
+          type: "/天",
+          title: "按天",
+          price: result.data.priceDate,
+        });
+        this.spuSaleAttrList.push({
+          type: "/月",
+          title: "按月",
+          price: result.data.priceMonth,
+        });
       } else {
         this.$message.warning(result.msg);
       }
+    },
+    // 下单
+    addOrder() {
+      // ...
+
+      this.$router.push("/successHandOrder");
+    },
+    selectSpuSale(spuSaleAttr, index) {
+      // 排他思想
+      this.currentIndex = index;
+      // 重新
+      this.num = 1;
+      this.price = spuSaleAttr.price;
+      this.type = spuSaleAttr.type;
     },
   },
   mounted() {
@@ -635,5 +661,20 @@ button {
       }
     }
   }
+}
+.chooseDd {
+  &.active {
+    background-color: #e1251b !important;
+    color: #fff !important;
+  }
+  padding: 0 10px;
+  height: 20px;
+  text-align: center;
+  line-height: 40px;
+  border: #e1251b 1px solid;
+}
+.choosed {
+  display: flex;
+  justify-content: center;
 }
 </style>

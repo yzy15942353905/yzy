@@ -44,7 +44,7 @@ export default {
 
       //最大移动距离
       var moveBig = small.offsetWidth - mask.offsetWidth;
-      var maskMoveX = 160 + mask.offsetWidth / 2;
+      var maskMoveX = 240 + mask.offsetWidth / 2;
       var maskMoveY = 240 + mask.offsetHeight / 2;
 
       var maskX = event.pageX - maskMoveX;

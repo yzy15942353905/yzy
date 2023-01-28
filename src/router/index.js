@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-01-28 09:16:34
+ * @LastEditTime: 2023-01-28 16:54:36
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -79,6 +79,21 @@ export const constantRoutes = [{
 
             info: "个人信息",
 
+        }
+    }, {
+        path: "/myOrder",
+        name: "我的订单",
+        component: () => import("@/pages/personalInfo"),
+        meta: {
+            info: "我的订单",
+        }
+    }, {
+        path: "/successHandOrder",
+        name: "下单成功",
+        component: () => import("@/pages/successHandOrder"),
+        meta: {
+            info: "下单成功",
+            hidden: true,
         }
     }]
 },
