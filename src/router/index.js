@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-01-18 15:57:09
+ * @LastEditTime: 2023-01-28 09:16:34
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
@@ -104,6 +104,7 @@ export const constantRoutes = [{
         component: () => import("@/pages/bicycleList/bicycleDetail"),
         meta: {
             info: "自行车详情",
+            hidden: true,
             icon: "iconfont icon-zihangche"
         }
     }]

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-09 14:40:33
- * @LastEditTime: 2023-01-17 15:11:19
+ * @LastEditTime: 2023-01-28 10:25:52
  * @FilePath: \vue_test\src\main.js
  */
 import Vue from 'vue'
@@ -27,6 +27,9 @@ import SlideVerify from 'vue-monoplasty-slide-verify';
 Vue.use(SlideVerify);
 
 new Vue({
+  beforeCreate() {
+    Vue.prototype.$bus = this    //安装全局事件总线，$bus 就是当前应用的vm
+  },
   router,
   store,
   render: h => h(App),
