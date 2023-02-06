@@ -19,6 +19,8 @@ import commonUtils from './utils/commonUtils'
 
 Vue.use(ElementUI);
 Vue.prototype.$commonUtils = commonUtils
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin)
 import './icons' // icon
 // 引入阿里巴巴矢量库样式
 import './icons/font_xa8crizq4r/iconfont.css'

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:42:21
- * @LastEditTime: 2022-12-13 16:07:25
+ * @LastEditTime: 2023-02-06 09:08:37
  * @FilePath: \vue_test\src\utils\commonUtils.js
  */
 /*
@@ -21,7 +21,7 @@ export default {
      * userRoutes
      */
     getUserRoutes(asyncRoutes, roleRoutes) {
-        if (Array.isArray(asyncRoutes) || Array.isArray(roleRoutes)) {
+        if (Array.isArray(asyncRoutes) && Array.isArray(roleRoutes)) {
             asyncRoutes = asyncRoutes.filter((v) => {
                 if (roleRoutes.indexOf(v.name) != -1) {
 
@@ -106,7 +106,9 @@ export default {
         let tab = option && option.tab ? option.tab : "-"
         let date = new Date(time)
         let Y = date.getFullYear()
-        let M = date.getMonth + 1 <= 9 ? "0" + date.getMonth() + 1 : date.getMonth() + 1
+
+        let M = date.getMonth() + 1 <= 9 ? ("0" + (date.getMonth() + 1)) : date.getMonth() + 1
+
         let D = date.getDate() <= 9 ? "0" + date.getDate() : date.getDate()
         result = Y + tab + M + tab + D
         if (option && option.sfm) {
@@ -135,6 +137,27 @@ export default {
      */
     deepCopy(obj) {
         return JSON.parse(JSON.stringify(obj))
+    }
+
+    ,
+    routersConcat(constantRoutes, roleRoutes) {
+
+        for (let j = 0; j < roleRoutes.length; j++) {
+            console.log(roleRoutes[j].meta);
+            if (roleRoutes[j].meta.appendChildren) {
+                console.log(1);
+                for (let index = 0; index < constantRoutes.length; index++) {
+                    if (constantRoutes[index].path == roleRoutes[j].path) {
+                        console.log(2);
+                        constantRoutes[index].children = constantRoutes[index].children.concat(roleRoutes[j].children)
+                        break;
+                    }
+                }
+            } else {
+                constantRoutes.push(roleRoutes[j])
+            }
+        }
+        return constantRoutes;
     }
 
 }

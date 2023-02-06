@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-10 14:29:28
- * @LastEditTime: 2023-01-18 16:11:12
+ * @LastEditTime: 2023-01-29 15:37:47
  * @FilePath: \vue_test\src\api\request.js
  */
 import axios from 'axios'
@@ -24,7 +24,8 @@ request.interceptors.request.use(function (config) {
     //启动进度条
     nprogress.start()
     // 设置token
-    getToken() && (config.headers["token"] = getToken())
+    let token = getToken()
+    token && (config.headers["token"] = token)
     return config;
 }, function (error) {
     // Do something with request error
@@ -35,11 +36,13 @@ request.interceptors.request.use(function (config) {
 request.interceptors.response.use(function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+
+    // if (response.data.code != "200") {
+    //     Message.error(response.data.msg)
+    //     router.replace('/')
+    // }
+
     //结束进度条
-    if (response.data.code !== "200") {
-        Message.error(response.data.msg)
-        router.replace('/')
-    }
     nprogress.done();
     return response.data;
 }, function (error) {

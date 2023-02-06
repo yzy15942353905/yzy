@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2023-01-18 10:18:42
+ * @LastEditTime: 2023-01-29 14:40:22
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -84,7 +84,7 @@ export default {
   min-height: 665px;
   transition: 0.5s all;
   padding: 10px;
-  background-color: #f5f5f5;
+  background-color: #fff;
   position: relative;
   overflow-x: hidden !important;
 }

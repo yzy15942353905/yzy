@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-17 14:35:43
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-01-28 14:13:52
+ * @LastEditTime: 2023-02-03 08:48:06
  * @FilePath: \yzy-2\src\pages\bicycleList\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,12 +25,7 @@
       </li>
     </ul> -->
     <el-row :gutter="20">
-      <el-col
-        :span="6"
-        v-for="(bicycle, index) in bicycleList"
-        :key="bicycle.id"
-        :offset="index > 0 ? 1 : 0"
-      >
+      <el-col :span="6" v-for="bicycle in bicycleList" :key="bicycle.id">
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img
             :src="bicycle.bicycleImage"

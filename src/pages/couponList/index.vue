@@ -1,14 +1,22 @@
 <!--
+ * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @Date: 2023-01-29 10:51:30
+ * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @LastEditTime: 2023-01-31 14:09:06
+ * @FilePath: \yzy-2\src\pages\couponList\index.vue
+ * @Description: 优惠卷管理（admin）
+-->
+<!--
  * @Description: 
  * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-01-29 14:54:48
+ * @LastEditTime: 2023-01-16 13:46:41
  * @FilePath: \vue_test\src\pages\userList\index.vue
 -->
 <template>
   <div>
-    <h4 class="hear_bg">用户查询</h4>
+    <h4 class="hear_bg">优惠卷查询</h4>
     <el-form
-      label-width="80px"
+      label-width="100px"
       :model="form"
       ref="form"
       :rules="rules"
@@ -16,37 +24,12 @@
     >
       <el-row :gutter="5">
         <el-col :span="8">
-          <el-form-item prop="nickName" label="昵称">
+          <el-form-item prop="couponName" label="优惠卷名称">
             <el-input
-              placeholder="昵称"
-              v-model.trim="form.nickName"
+              placeholder="优惠卷名称"
+              v-model.trim="form.couponName"
               clearable
             ></el-input> </el-form-item
-        ></el-col>
-        <el-col :span="8">
-          <el-form-item prop="phone" label="手机号码">
-            <el-input
-              placeholder="手机号码"
-              v-model.trim="form.phone"
-              clearable
-            ></el-input> </el-form-item
-        ></el-col>
-        <el-col :span="8">
-          <el-form-item prop="sex" label="性别">
-            <el-select
-              v-model="form.sex"
-              placeholder="请选择"
-              style="width: 100%"
-              clearable=""
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select> </el-form-item
         ></el-col>
       </el-row>
       <el-row justify="center" type="flex" class="mt10">
@@ -54,40 +37,65 @@
           size="small"
           icon="el-icon-search"
           type="primary"
-          @click="findPage(1)"
+          @click="getCouponList(1)"
           >查 询</el-button
         >
       </el-row>
     </el-form>
     <h4 class="hear_bg">用户列表</h4>
     <el-table :data="tableData" style="width: 100%" border stripe>
-      <el-table-column prop="id" label="用户id" width="80"> </el-table-column>
-      <el-table-column prop="nickName" label="昵称"> </el-table-column>
-      <el-table-column prop="phone" label="手机号码" width="180">
+      <el-table-column prop="couponId" label="优惠卷id" width="80">
       </el-table-column>
-      <el-table-column prop="sex" label="性别" width="80"> </el-table-column>
-      <el-table-column prop="points" label="积分" width="80"> </el-table-column>
-      <el-table-column prop="credit" label="信誉度" width="80">
+      <el-table-column prop="couponName" label="优惠卷名称" width="100">
       </el-table-column>
-      <el-table-column prop="address" label="地址" width="300">
+      <el-table-column prop="couponDesc" label="优惠卷详情" width="180">
       </el-table-column>
-      <el-table-column prop="createTime" label="创建时间" width="180">
+      <el-table-column
+        prop="couponStatus"
+        label="优惠卷状态"
+        width="100"
+        :formatter="getCouponStatus"
+      >
       </el-table-column>
+      <el-table-column
+        prop="couponCondition"
+        label="优惠卷条件(单位：元)"
+        width="160"
+      >
+      </el-table-column>
+      <el-table-column prop="couponDiscount" label="折扣" width="80">
+      </el-table-column>
+      <el-table-column prop="couponAccount" label="抵用金额" width="180">
+      </el-table-column>
+      <el-table-column prop="createDate" label="创建时间" width="180">
+      </el-table-column>
+      <el-table-column prop="creator" label="创建人" width="180">
+      </el-table-column>
+
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
           <el-button
-            @click="lookdDetail(scope.row.id)"
+            @click="lookdDetail(scope.row.couponId)"
             class="viewBtn"
             type="text"
             icon="el-icon-view"
             >查看详情</el-button
           >
           <el-button
-            @click="deleteById(scope.row.id)"
+            v-if="scope.row.couponStatus == 1"
+            @click="offCoupon(scope.row.couponId)"
             type="text"
             class="deleteBtn"
             icon="el-icon-delete"
-            >删除</el-button
+            >下架</el-button
+          >
+          <el-button
+            v-else
+            @click="putCoupon(scope.row.couponId)"
+            type="text"
+            class="editBtn"
+            icon="el-icon-position"
+            >上架</el-button
           >
           <el-button
             @click="update(scope.row)"
@@ -113,12 +121,7 @@
 </template>
 
 <script>
-import {
-  findPage,
-  deleteById,
-  getById,
-  savaOrUpdate,
-} from "@/api/modules/user.js";
+import { getCouponList, putCoupon, offCoupon } from "@/api/modules/coupon.js";
 export default {
   data() {
     return {
@@ -128,18 +131,20 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      options: [
-        { lable: "男", value: "男" },
-        { lable: "女", value: "女" },
-        { lable: "保密", value: "保密" },
-      ],
     };
   },
   methods: {
-    async findPage(pageNum) {
-      pageNum && (this.form.pageNum = pageNum);
+    getCouponStatus(row) {
+      let obj = {
+        1: "上架",
+        2: "下架",
+      };
+      return obj[row.couponStatus];
+    },
+    async getCouponList(pageNum) {
+      this.form.pageNum = pageNum;
       this.form.pageSize = this.pageSize;
-      let result = await findPage(this.form);
+      let result = await getCouponList(this.form);
       if (result.code == 200) {
         if (
           result.data == null ||
@@ -159,23 +164,33 @@ export default {
       }
     },
     async lookdDetail(id) {},
-    async deleteById(id) {
-      let result = await deleteById(id);
+    async offCoupon(id) {
+      let result = await offCoupon(id);
 
       if (result.code == 200) {
         this.$message.success(result.msg);
-        this.findPage(1);
+        this.getCouponList(1);
+      } else {
+        this.$message.error(result.msg);
+      }
+    },
+    async putCoupon(id) {
+      let result = await putCoupon(id);
+
+      if (result.code == 200) {
+        this.$message.success(result.msg);
+        this.getCouponList(1);
       } else {
         this.$message.error(result.msg);
       }
     },
     async update() {},
     handleCurrentChange(val) {
-      this.findPage(val);
+      this.getCouponList(val);
     },
   },
   mounted() {
-    this.findPage(1);
+    this.getCouponList(1);
   },
 };
 </script>

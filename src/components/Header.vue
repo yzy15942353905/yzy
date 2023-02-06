@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2023-01-05 16:10:38
+ * @LastEditTime: 2023-02-01 16:54:38
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -46,11 +46,20 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item @click.native="$router.push('personalInfo')"
               ><span>个人中心</span></el-dropdown-item
+            ><el-dropdown-item @click.native="toMyOrder"
+              ><span>我的订单</span></el-dropdown-item
             >
-            <el-dropdown-item><span>我的购物车</span></el-dropdown-item>
-            <el-dropdown-item><span>我的订单</span></el-dropdown-item>
-            <el-dropdown-item><span>我的收藏</span></el-dropdown-item>
 
+            <el-dropdown-item @click.native="$router.push('myCoupon')"
+              ><span>我的优惠卷</span></el-dropdown-item
+            >
+
+            <el-dropdown-item @click.native="$router.push('collection')"
+              ><span>我的收藏</span></el-dropdown-item
+            >
+            <el-dropdown-item @click.native="$router.push('myComment')"
+              ><span>我的评价</span></el-dropdown-item
+            >
             <el-dropdown-item divided @click.native="logout"
               >退出登录</el-dropdown-item
             >
@@ -90,6 +99,9 @@ export default {
       // 重置路由
       resetRoute();
       this.$router.replace("/");
+    },
+    toMyOrder() {
+      this.$router.push({ path: "/myOrderList", query: { flag: 1 } });
     },
   },
   computed: {

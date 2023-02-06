@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-18 15:52:06
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-01-28 16:37:46
+ * @LastEditTime: 2023-02-02 16:58:59
  * @FilePath: \yzy-2\src\pages\bicycleList\bicycleDetail.vue
  * @Description: 自行车详情页
 -->
@@ -17,7 +17,7 @@
           <!--放大镜效果-->
           <Zoom :imgList="bicycleInfo" />
           <!-- 小图列表 -->
-          <ImageList :imgList="[]" />
+          <!-- <ImageList :imgList="[]" /> -->
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="remark">
                   <i>累计评价</i>
-                  <em>65545</em>
+                  <em>{{ commentCount }}条</em>
                 </div>
               </div>
             </div>
@@ -50,7 +50,7 @@
             <div class="chooseArea">
               <div class="choosed"></div>
               <dl>
-                <dt class="title">租赁方式</dt>
+                <dt class="title">租赁方式:</dt>
                 <dd
                   :class="
                     currentIndex === index ? 'chooseDd active' : 'chooseDd'
@@ -65,16 +65,46 @@
             </div>
             <div>
               <div>
+                租赁时长：
                 <el-input-number
                   v-model="num"
                   :min="1"
                   label="描述文字"
                 ></el-input-number>
+                {{ type }}
                 <div style="margin-top: 20px">
-                  <div>总价 {{ num * this.price }} 元</div>
+                  请选择优惠卷：
+                  <el-select
+                    v-model="form.couponId"
+                    placeholder="请选择"
+                    @focus="selectFocus"
+                    @change="selectChange"
+                  >
+                    <el-option
+                      v-for="item in options"
+                      :key="item.couponId"
+                      :label="item.couponName"
+                      :value="item.couponId"
+                    >
+                      <span style="float: left">{{ item.couponName }}</span>
+                      <span
+                        style="float: right; color: #8492a6; font-size: 13px"
+                        >{{ item.couponDesc }}</span
+                      >
+                    </el-option>
+                  </el-select>
                 </div>
                 <div style="margin-top: 20px">
-                  <el-button type="danger">点我下单</el-button>
+                  <div>总价 {{ rentTotal }} 元</div>
+                </div>
+                <div style="margin-top: 20px">
+                  <div>优惠后总价 {{ discoutTotal }} 元</div>
+                </div>
+
+                <div style="margin-top: 20px">
+                  <el-button type="danger" @click="addOrder"
+                    >点我下单</el-button
+                  >
                 </div>
               </div>
             </div>
@@ -82,20 +112,44 @@
         </div>
       </div>
     </section>
+    <!-- 评论区 -->
+    <section>
+      <CommentArea
+        :bicycleId="this.$route.query.bicycleId"
+        @getCommentCount="getCommentCount"
+      />
+    </section>
   </div>
 </template>
 
 <script>
 import { getById } from "@/api/modules/bicycle.js";
+import { getMyUsableCoupon } from "@/api/modules/coupon.js";
+import { submitOrder } from "@/api/modules/order.js";
 import ImageList from "./ImageList/ImageList.vue";
 import Zoom from "./Zoom/Zoom.vue";
+import CommentArea from "@/pages/CommentArea";
 export default {
   components: {
     ImageList,
     Zoom,
+    CommentArea,
   },
   data() {
     return {
+      form: {
+        bicycleId: "",
+        userId: "",
+        rentType: "",
+        rentTime: "",
+        ifCoupon: "",
+        couponId: "",
+        rentTotal: "",
+        discoutTotal: "",
+        deposit: "",
+      },
+      discout: "",
+      options: {},
       bicycleId: undefined,
       bicycleInfo: {},
       price: undefined,
@@ -103,7 +157,37 @@ export default {
       currentIndex: 0,
       num: 1,
       spuSaleAttrList: [],
+      // 评论数量
+      commentCount: 0,
     };
+  },
+  computed: {
+    rentTotal() {
+      return this.price * this.num;
+    },
+    discoutTotal() {
+      return this.discout
+        ? (this.price * this.num * this.discout).toFixed(0)
+        : this.rentTotal;
+    },
+    // 押金为优惠前总价的20%
+    deposit() {
+      return (this.rentTotal * 0.2).toFixed(0);
+    },
+    // 租赁方式码值
+    typeCode() {
+      let obj = {
+        "/时": 1,
+        "/天": 2,
+        "/月": 3,
+      };
+      return obj[this.type];
+    },
+  },
+  watch: {
+    rentTotal() {
+      this.form.couponId = "";
+    },
   },
   methods: {
     async getById(bicycleId) {
@@ -133,10 +217,23 @@ export default {
       }
     },
     // 下单
-    addOrder() {
+    async addOrder() {
       // ...
-
-      this.$router.push("/successHandOrder");
+      this.form.userId = this.$store.state.userInfo.userInfo.id;
+      this.form.bicycleId = this.$route.query.bicycleId;
+      this.form.rentType = this.typeCode;
+      this.form.rentTime = this.num;
+      this.form.ifCoupon = this.form.couponId != "" ? 1 : 0;
+      this.form.rentTotal = this.rentTotal;
+      this.form.discoutTotal = this.discoutTotal;
+      this.form.deposit = this.deposit;
+      this.form.startTime = this.$commonUtils.getTime({ sfm: true });
+      let result = await submitOrder(this.form);
+      if (result.code == 200) {
+        this.$router.push("/successHandOrder");
+      } else {
+        this.$message.error(result.msg);
+      }
     },
     selectSpuSale(spuSaleAttr, index) {
       // 排他思想
@@ -145,6 +242,32 @@ export default {
       this.num = 1;
       this.price = spuSaleAttr.price;
       this.type = spuSaleAttr.type;
+    },
+    // 获取当前订单可用的优惠卷
+    async selectFocus() {
+      let form = {
+        userId: this.$store.state.userInfo.userInfo.id,
+        price: this.rentTotal,
+      };
+      let result = await getMyUsableCoupon(form);
+      if (result.code == 200) {
+        this.options = result.data;
+      } else {
+        this.$message.warning(result.msg);
+      }
+    },
+    // 获取当前选择的优惠卷折扣
+    selectChange(couponId) {
+      for (let index = 0; index < this.options.length; index++) {
+        if (this.options[index].couponId == couponId) {
+          this.discout = this.options[index].couponDiscount;
+          break;
+        }
+      }
+    },
+    // 获取评论数量
+    getCommentCount(val) {
+      this.commentCount = val;
     },
   },
   mounted() {

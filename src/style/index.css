@@ -73,6 +73,11 @@ code {
     border-radius: 3px;
 }
 
+.el-scrollbar__wrap::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
 /* .el-row {
     margin-bottom: 10px !important;
 } */

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-01-17 14:32:59
+ * @LastEditTime: 2023-02-03 16:39:10
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -46,8 +46,10 @@ const actions = {
     }) {
         // ["权限管理", "用户管理", "用户列表"]
         // 后端还没配置 store.state.userInfo.userInfo.asyncRoutes
-        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表"])
-        let userRoutes = constantRoutes.concat(roleRoutes)
+        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表", "优惠卷管理", "订单管理", "评价管理", "自行车租赁","新增自行车"])
+        console.log("路由", constantRoutes, roleRoutes);
+        let userRoutes = commonUtils.routersConcat(constantRoutes, roleRoutes)
+        // constantRoutes.concat(roleRoutes)
 
         userRoutes = userRoutesFilter(userRoutes)
 

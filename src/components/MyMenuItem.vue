@@ -5,7 +5,7 @@
  * @FilePath: \vue_test\src\components\MyMenuItem.vue
 -->
 <template>
-  <div>
+  <fragment>
     <template v-for="item in menuData">
       <el-submenu
         :index="item.path"
@@ -24,7 +24,7 @@
         <span slot="title">{{ item.name }}</span>
       </el-menu-item>
     </template>
-  </div>
+  </fragment>
 </template>
 
 <script>

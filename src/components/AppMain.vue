@@ -1,21 +1,15 @@
 <!--
  * @Description: 
  * @Date: 2022-11-28 15:24:06
- * @LastEditTime: 2023-01-18 10:42:51
+ * @LastEditTime: 2023-02-01 17:10:29
  * @FilePath: \vue_test\src\components\AppMain.vue
 -->
 <template>
-  <div
-    style="
-      padding: 15px;
-      box-sizing: border-box;
-      min-height: 666px;
-    "
-  >
+  <div style="padding: 15px; box-sizing: border-box; min-height: 666px">
     <TagList />
 
     <transition name="fade-transform" mode="out-in">
-      <router-view></router-view>
+      <router-view :key="$route.fullPath"></router-view>
     </transition>
   </div>
 </template>
