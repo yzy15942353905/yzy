@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-26 17:39:41
- * @LastEditTime: 2023-01-05 14:42:19
+ * @LastEditTime: 2023-02-08 08:54:26
  * @FilePath: \vue_test\src\pages\personalInfo\index.vue
 -->
 <template>
@@ -41,11 +41,23 @@
             ><el-input v-model="userInfo.phone" disabled></el-input
           ></el-form-item>
           <el-form-item label="积分:" prop="phoneNumber"
-            ><el-input v-model="userInfo.points" disabled></el-input
-          ></el-form-item>
+            ><el-input v-model="userInfo.points" disabled>
+              <template slot="append"
+                ><el-button type="primary" @click="pointsDialogVisible = true"
+                  >查看积分历史记录</el-button
+                ></template
+              ></el-input
+            ></el-form-item
+          >
           <el-form-item label="信誉度:" prop="phoneNumber"
-            ><el-input v-model="userInfo.credit" disabled></el-input
-          ></el-form-item>
+            ><el-input v-model="userInfo.credit" disabled>
+              <template slot="append"
+                ><el-button type="primary" @click="lookCreditRecords"
+                  >查看信誉历史记录</el-button
+                ></template
+              ></el-input
+            ></el-form-item
+          >
           <el-form-item label="地址:" prop="address"
             ><el-input v-model="userInfo.address"></el-input
           ></el-form-item>
@@ -64,13 +76,30 @@
         >
       </el-row>
     </el-form>
+
+    <el-dialog title="提示" :visible.sync="creditDialogVisible" width="70%">
+      <CreditRecords />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="creditDialogVisible = false">关闭</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="提示" :visible.sync="pointsDialogVisible" width="70%">
+      <PointsRecords />
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="pointsDialogVisible = false">关闭</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import CreditRecords from "../CreditRecords";
+import PointsRecords from "../PointsRecords";
 export default {
   data() {
     return {
+      creditDialogVisible: false,
+      pointsDialogVisible: false,
       userInfo: {},
       rules: {
         nickName: [
@@ -79,6 +108,10 @@ export default {
         ],
       },
     };
+  },
+  components: {
+    CreditRecords,
+    PointsRecords,
   },
   computed: {},
   methods: {
@@ -93,7 +126,6 @@ export default {
       });
     },
     handleAvatarSuccess(res, file) {
-      console.log("file.response.data", file.response);
       res.code == 200 && (this.userInfo.avatar = file.response.data);
       res.code != 200 && this.$message.error(res.msg);
     },
@@ -111,6 +143,9 @@ export default {
       }, 0);
 
       return isJP && isLt2M;
+    },
+    lookCreditRecords() {
+      this.creditDialogVisible = true;
     },
   },
   mounted() {

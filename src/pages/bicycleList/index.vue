@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-17 14:35:43
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-03 08:48:06
+ * @LastEditTime: 2023-02-09 14:45:21
  * @FilePath: \yzy-2\src\pages\bicycleList\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,7 +25,12 @@
       </li>
     </ul> -->
     <el-row :gutter="20">
-      <el-col :span="6" v-for="bicycle in bicycleList" :key="bicycle.id">
+      <el-col
+        :span="6"
+        v-for="bicycle in bicycleList"
+        :key="bicycle.id"
+        style="margin-top: 20px"
+      >
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img
             :src="bicycle.bicycleImage"
@@ -89,7 +94,7 @@ export default {
       userId: undefined,
       total: 0,
       pageNum: 1,
-      pageSize: 10,
+      pageSize: 8,
     };
   },
   methods: {

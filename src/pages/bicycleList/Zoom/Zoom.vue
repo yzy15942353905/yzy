@@ -1,16 +1,18 @@
 <template>
-  <div class="spec-preview">
-    <img :src="bicycleImage || imgList.bicycleImage" ref="small" />
+  <div class="spec-preview" ref="s">
     <div
+      ref="small"
       class="event"
       @mouseenter="enterEvent"
       @mouseleave="leaveEvent"
       @mousemove="moveEvent"
-    ></div>
-    <div class="big" v-if="flag">
-      <img v-if="flag" :src="bicycleImage || imgList.bicycleImage"  ref="big"/>
+    >
+      <img :src="bicycleImage || imgList.bicycleImage" />
+      <div v-if="flag" class="mask" ref="mask"></div>
     </div>
-    <div v-if="flag" class="mask" ref="mask"></div>
+    <div class="big" v-if="flag">
+      <img v-if="flag" :src="bicycleImage || imgList.bicycleImage" ref="big" />
+    </div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@ export default {
   data() {
     return {
       //小图片传来的url
-      bicycleImage: '',
+      bicycleImage: "",
       flag: false,
     };
   },
@@ -44,8 +46,8 @@ export default {
 
       //最大移动距离
       var moveBig = small.offsetWidth - mask.offsetWidth;
-      var maskMoveX = 240 + mask.offsetWidth / 2;
-      var maskMoveY = 240 + mask.offsetHeight / 2;
+      var maskMoveX = small.getBoundingClientRect().left + mask.offsetWidth / 2;
+      var maskMoveY = small.getBoundingClientRect().top + mask.offsetHeight / 2;
 
       var maskX = event.pageX - maskMoveX;
       var maskY = event.pageY - maskMoveY;
@@ -61,6 +63,19 @@ export default {
 
       big.style.top = -((maskY * big.offsetHeight) / small.offsetHeight) + "px";
       big.style.left = -((maskX * big.offsetWidth) / small.offsetWidth) + "px";
+    },
+    getElementTop(element) {
+      var actualTop = element.offsetTop;
+
+      var current = element.offsetParent;
+
+      while (current !== null) {
+        actualTop += current.offsetTop;
+
+        current = current.offsetParent;
+      }
+
+      return actualTop;
     },
   },
 };

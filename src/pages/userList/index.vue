@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-01-29 14:54:48
+ * @LastEditTime: 2023-02-08 14:04:22
  * @FilePath: \vue_test\src\pages\userList\index.vue
 -->
 <template>
@@ -159,15 +159,28 @@ export default {
       }
     },
     async lookdDetail(id) {},
-    async deleteById(id) {
-      let result = await deleteById(id);
+    deleteById(id) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          let result = await deleteById(id);
 
-      if (result.code == 200) {
-        this.$message.success(result.msg);
-        this.findPage(1);
-      } else {
-        this.$message.error(result.msg);
-      }
+          if (result.code == 200) {
+            this.$message.success(result.msg);
+            this.findPage(1);
+          } else {
+            this.$message.error(result.msg);
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
     async update() {},
     handleCurrentChange(val) {
@@ -180,5 +193,5 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 </style>

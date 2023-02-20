@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2023-02-01 16:54:38
+ * @LastEditTime: 2023-02-06 10:01:51
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -60,7 +60,7 @@
             <el-dropdown-item @click.native="$router.push('myComment')"
               ><span>我的评价</span></el-dropdown-item
             >
-            <el-dropdown-item divided @click.native="logout"
+            <el-dropdown-item divided @click.native="logout" style="color: red"
               >退出登录</el-dropdown-item
             >
           </el-dropdown-menu>
@@ -101,7 +101,7 @@ export default {
       this.$router.replace("/");
     },
     toMyOrder() {
-      this.$router.push({ path: "/myOrderList", query: { flag: 1 } });
+      this.$router.push({ path: "/myOrderList" });
     },
   },
   computed: {

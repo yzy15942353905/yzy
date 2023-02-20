@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <h4 class="hear_bg">{{ title }}订单</h4>
+    <h4 class="hear_bg">全部订单</h4>
     <el-form
       label-width="100px"
       :model="form"
@@ -21,7 +21,7 @@
         <el-col :span="8">
           <el-form-item prop="orderStatus" label="订单状态">
             <el-select
-              v-model="form.status"
+              v-model="form.orderStatus"
               value-key=""
               placeholder="请选择"
               style="width: 100%"
@@ -47,7 +47,7 @@
         >
       </el-row>
     </el-form>
-    <h4 class="hear_bg">{{ title }}订单列表</h4>
+    <h4 class="hear_bg">全部订单列表</h4>
     <el-table :data="tableData" style="width: 100%" border stripe>
       <el-table-column prop="orderId" label="订单编号" width="80">
       </el-table-column>
@@ -55,25 +55,15 @@
       </el-table-column>
       <el-table-column prop="bicycleName" label="自行车名称" width="180">
       </el-table-column>
-
-      <el-table-column
-        prop="userId"
-        label="租客编号"
-        width="180"
-        v-if="flag == 0"
-      >
+      <el-table-column prop="userId" label="租客编号" width="180">
       </el-table-column>
-      <el-table-column
-        prop="nickName"
-        label="租客姓名"
-        width="180"
-        v-if="flag == 0"
-      >
+      <el-table-column prop="nickName" label="租客姓名" width="180">
       </el-table-column>
-
       <el-table-column prop="startTime" label="开始时间" width="160">
       </el-table-column>
-      <el-table-column prop="endTime" label="结束时间" width="80">
+      <el-table-column prop="expectEndTime" label="预计结束时间" width="160">
+      </el-table-column>
+      <el-table-column prop="endTime" label="结束时间" width="160">
       </el-table-column>
       <el-table-column
         prop="rentType"
@@ -166,15 +156,13 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      // 是否全部订单标识
-      flag: 0,
     };
   },
   methods: {
     YesOrNo(_, __, value) {
       let obj = {
         1: "是",
-        2: "否",
+        0: "否",
       };
       return obj[value];
     },
@@ -198,10 +186,6 @@ export default {
     async getMyOrder(pageNum) {
       this.form.pageNum = pageNum;
       this.form.pageSize = this.pageSize;
-
-      this.flag &&
-        (this.form.userId = this.$store.state.userInfo.userInfo.id) &&
-        (this.form.isSelf = 1);
       let result = await getMyOrder(this.form);
       if (result.code == 200) {
         if (
@@ -225,20 +209,11 @@ export default {
       this.getMyOrder(val);
     },
   },
-  computed: {
-    title() {
-      let obj = {
-        1: "我的",
-        0: "全部",
-      };
-      return obj[this.flag];
-    },
-  },
+  computed: {},
   beforeUpdate() {
     // this.getMyOrder(1);
   },
   mounted() {
-    this.$route.query.flag ? (this.flag = 1) : (this.flag = 0);
     this.getMyOrder(1);
   },
 };

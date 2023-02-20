@@ -138,17 +138,15 @@ export default {
     deepCopy(obj) {
         return JSON.parse(JSON.stringify(obj))
     }
+,
 
-    ,
     routersConcat(constantRoutes, roleRoutes) {
 
         for (let j = 0; j < roleRoutes.length; j++) {
-            console.log(roleRoutes[j].meta);
-            if (roleRoutes[j].meta.appendChildren) {
-                console.log(1);
+         
+            if (roleRoutes[j].meta.appendChildren) {         
                 for (let index = 0; index < constantRoutes.length; index++) {
                     if (constantRoutes[index].path == roleRoutes[j].path) {
-                        console.log(2);
                         constantRoutes[index].children = constantRoutes[index].children.concat(roleRoutes[j].children)
                         break;
                     }

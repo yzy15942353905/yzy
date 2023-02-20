@@ -156,6 +156,7 @@ export default {
     // 登录成功提示信息
     loginSuccess() {
       const h = this.$createElement;
+      this.$forceUpdate();
       this.$notify({
         title: "登录成功！",
         message: h(

@@ -1,7 +1,7 @@
 /*
  * @Description: 
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-02-03 16:39:10
+ * @LastEditTime: 2023-02-09 16:51:44
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store"
@@ -46,16 +46,18 @@ const actions = {
     }) {
         // ["权限管理", "用户管理", "用户列表"]
         // 后端还没配置 store.state.userInfo.userInfo.asyncRoutes
-        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表", "优惠卷管理", "订单管理", "评价管理", "自行车租赁","新增自行车"])
-        console.log("路由", constantRoutes, roleRoutes);
+
+        let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, ["权限管理", "用户管理", "用户列表", "优惠卷管理", "订单管理", "评价管理", "自行车租赁", "自行车管理", "新增自行车", "新增权限"])
+
         let userRoutes = commonUtils.routersConcat(constantRoutes, roleRoutes)
-        // constantRoutes.concat(roleRoutes)
-
-        userRoutes = userRoutesFilter(userRoutes)
-
+        // userRoutes = userRoutesFilter(userRoutes)
         roleRoutes.forEach(roleRoute => {
             router.addRoute(roleRoute);
         });
+
+        // setTimeout(() => {
+        //     userRoutes = userRoutesFilter(userRoutes)
+        // }, 0);
 
         router.addRoute({
             path: '*',
@@ -65,6 +67,7 @@ const actions = {
             }
 
         })
+
         commit("SETROLEROUTRES", userRoutes)
 
     },
@@ -97,7 +100,7 @@ const actions = {
             Message.error(result.msg)
             return false
         } else {
-            store.dispatch("userInfo/setRoleRoutes");
+            // store.dispatch("userInfo/setRoleRoutes");
             setToken(result.data.token)
             result.data.token = undefined
             sessionStorage.setItem("userInfo", JSON.stringify(result.data))
@@ -132,7 +135,7 @@ const getter = {}
 
 
 const userRoutesFilter = (userRoutes) => {
-    userRoutes = userRoutes.filter((item) => {
+    return userRoutes.filter((item) => {
 
         if (item.meta.hidden) {
             return false
@@ -142,7 +145,7 @@ const userRoutesFilter = (userRoutes) => {
         return true
     })
 
-    return userRoutes
+
 
 }
 export default {

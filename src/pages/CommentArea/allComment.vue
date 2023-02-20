@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-29 10:51:30
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-03 14:17:02
+ * @LastEditTime: 2023-02-06 09:47:54
  * @FilePath: \yzy-2\src\pages\couponList\index.vue
  * @Description: 评价管理（admin）
 -->
@@ -70,6 +70,13 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
+          <el-button
+            @click="lookOrder(scope.row.orderId)"
+            type="text"
+            class="viewBtn"
+            icon="el-icon-s-promotion"
+            >查看该订单</el-button
+          >
           <el-button
             v-if="scope.row.isBan == 0"
             @click="offComment(scope.row.commentId)"

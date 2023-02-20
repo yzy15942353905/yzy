@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-18 15:52:06
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-02 16:58:59
+ * @LastEditTime: 2023-02-07 14:28:55
  * @FilePath: \yzy-2\src\pages\bicycleList\bicycleDetail.vue
  * @Description: 自行车详情页
 -->
@@ -79,6 +79,7 @@
                     placeholder="请选择"
                     @focus="selectFocus"
                     @change="selectChange"
+                    clearable
                   >
                     <el-option
                       v-for="item in options"
@@ -149,7 +150,7 @@ export default {
         deposit: "",
       },
       discout: "",
-      options: {},
+      options: [],
       bicycleId: undefined,
       bicycleInfo: {},
       price: undefined,
@@ -228,6 +229,16 @@ export default {
       this.form.discoutTotal = this.discoutTotal;
       this.form.deposit = this.deposit;
       this.form.startTime = this.$commonUtils.getTime({ sfm: true });
+      let days = 0;
+      let hours = 0;
+      if (this.typeCode == 1) {
+        hours = this.num;
+      } else if (this.typeCode == 2) {
+        days = this.num;
+      } else {
+        days = this.num * 31;
+      }
+      this.form.expectEndTime = this.change_date(days, hours);
       let result = await submitOrder(this.form);
       if (result.code == 200) {
         this.$router.push("/successHandOrder");
@@ -253,6 +264,7 @@ export default {
       if (result.code == 200) {
         this.options = result.data;
       } else {
+        this.options = [];
         this.$message.warning(result.msg);
       }
     },
@@ -268,6 +280,40 @@ export default {
     // 获取评论数量
     getCommentCount(val) {
       this.commentCount = val;
+    },
+    change_date: function (days, hours) {
+      // 参数表示在当前日期下要增加的天数
+      var now = new Date();
+      // + 1 代表日期加，- 1代表日期减
+      now.setDate(now.getDate() + 1 * days);
+      var year = now.getFullYear();
+      var month = now.getMonth() + 1;
+      var day = now.getDate();
+      now.setHours(now.getHours() + hours);
+      let hour = now.getHours() <= 9 ? "0" + now.getHours() : now.getHours();
+      let minutes =
+        now.getMinutes() <= 9 ? "0" + now.getMinutes() : now.getMinutes();
+      let seconds =
+        now.getSeconds() <= 9 ? "0" + now.getSeconds() : now.getSeconds();
+      if (month < 10) {
+        month = "0" + month;
+      }
+      if (day < 10) {
+        day = "0" + day;
+      }
+      return (
+        year +
+        "-" +
+        month +
+        "-" +
+        day +
+        " " +
+        hour +
+        ":" +
+        minutes +
+        ":" +
+        seconds
+      );
     },
   },
   mounted() {

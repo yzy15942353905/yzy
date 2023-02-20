@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-16 16:50:27
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-01-18 10:58:45
+ * @LastEditTime: 2023-02-08 11:23:54
  * @FilePath: \yzy-2\src\api\modules\bicycle.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -56,3 +56,57 @@ export const getById = (bicycleId) => {
         method: "get",
     })
 }
+
+/**
+ * @description: 自行车管理列表
+ * @param {*} 
+ * bicycleName
+ * bicycleType
+ * address
+ * status
+ * @return {*} BicycleList
+ */
+export const getBicycleListMange = (params) => {
+    return request({
+        url: `/bicycle/bicycleMangeList`,
+        method: "get",
+        params
+    })
+}
+/**
+ * @description: 上架自行车
+ * @param {*} bicycleId
+ * @return {*}  trueOrFalse
+ */
+export const putShelf = (bicycleId) => {
+    return request({
+        url: `/bicycle/putShelf/${bicycleId}`,
+        method: "post",
+
+    })
+}
+/**
+ * @description: 下架自行车
+ * @param {*} bicycleId
+ * @return {*}  trueOrFalse
+ */
+export const offShelf = (bicycleId) => {
+    return request({
+        url: `/bicycle/offShelf/${bicycleId}`,
+        method: "post",
+
+    })
+}
+/**
+ * @description: 维修自行车
+ * @param {*} bicycleId
+ * @return {*}  trueOrFalse
+ */
+export const maintain = (bicycleId) => {
+    return request({
+        url: `/bicycle/maintain/${bicycleId}`,
+        method: "post",
+
+    })
+}
+

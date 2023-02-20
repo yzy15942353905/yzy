@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-02-01 15:20:45
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-01 15:21:03
+ * @LastEditTime: 2023-02-09 14:19:55
  * @FilePath: \yzy-2\src\api\modules\order.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -42,7 +42,7 @@ export const cancelOrder = (order_id) => {
     return request({
         url: `/myOrder/cancelOrder/${order_id}`,
         method: "post",
-        
+
     })
 }
 /**
@@ -50,10 +50,39 @@ export const cancelOrder = (order_id) => {
  * @param {*} order_id
  * @return {*} Boolean
  */
- export const deleteOrder = (order_id) => {
+export const deleteOrder = (order_id) => {
     return request({
         url: `/myOrder/del/${order_id}`,
         method: "post",
-        
+
+    })
+}
+/**
+ * @description: 结束订单 
+ * @param {*} 
+ * order_id
+ * returnAddress
+ * @return {*} Boolean
+ */
+export const finishOrder = (data) => {
+    return request({
+        url: `/myOrder/finishOrder`,
+        method: "post",
+        data
+    })
+}
+
+/**
+ * @description: 评价订单 
+ * @param {*} 
+ * order_id,commentContent,star
+ * returnAddress
+ * @return {*} Boolean
+ */
+export const commentOrder = (data) => {
+    return request({
+        url: `/myOrder/commentOrder`,
+        method: "post",
+        data
     })
 }

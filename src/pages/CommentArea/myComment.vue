@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-29 10:51:30
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-03 15:40:57
+ * @LastEditTime: 2023-02-06 09:50:57
  * @FilePath: \yzy-2\src\pages\couponList\index.vue
  * @Description: 评价管理（admin）
 -->
@@ -49,11 +49,11 @@
       </el-table-column>
       <el-table-column prop="bicycleId" label="自行车id" width="100">
       </el-table-column>
-      <el-table-column prop="bicycleName" label="自行车名称" width="160">
+      <el-table-column prop="bicycleName" label="自行车名称" width="150">
       </el-table-column>
-      <el-table-column prop="commentContent" label="评价内容" width="80">
+      <el-table-column prop="commentContent" label="评价内容" width="300">
       </el-table-column>
-      <el-table-column prop="star" label="评分" width="180"> </el-table-column>
+      <el-table-column prop="star" label="评分" width="80"> </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="180">
       </el-table-column>
       <el-table-column
@@ -66,6 +66,13 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="280">
         <template slot-scope="scope">
+          <el-button
+            @click="lookOrder(scope.row.orderId)"
+            type="text"
+            class="viewBtn"
+            icon="el-icon-s-promotion"
+            >查看该订单</el-button
+          >
           <el-button
             @click="delComment(scope.row.commentId)"
             type="text"

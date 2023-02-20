@@ -1,12 +1,12 @@
 /*
  * @Description: 
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-02-06 09:05:44
+ * @LastEditTime: 2023-02-10 13:43:00
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import { getToken } from "@/utils/auth"
+// import { getToken } from "@/utils/auth"
 Vue.use(Router)
 export const constantRoutes = [{
     name: "首页",
@@ -15,7 +15,7 @@ export const constantRoutes = [{
     meta: {
         info: "首页",
         icon: "el-icon-s-home",
-
+        hidden: true
     },
     children: [{
         name: "首页",
@@ -77,6 +77,7 @@ export const constantRoutes = [{
         component: () => import("@/pages/personalInfo"),
         meta: {
             info: "个人信息",
+            hidden: true
         }
     }, {
         path: "/successHandOrder",
@@ -92,6 +93,7 @@ export const constantRoutes = [{
         component: () => import("@/pages/couponList/MyCouponList.vue"),
         meta: {
             info: "我的优惠卷",
+            hidden: true
         }
     }, {
         path: "/collection",
@@ -99,13 +101,15 @@ export const constantRoutes = [{
         component: () => import("@/pages/collection"),
         meta: {
             info: "我的收藏",
+            hidden: true
         }
     }, {
         path: "/myOrderList",
         name: "我的订单",
-        component: () => import("@/pages/orderList"),
+        component: () => import("@/pages/orderList/myOrder.vue"),
         meta: {
             info: "我的订单",
+            hidden: true
         }
     }, {
         path: "/myComment",
@@ -113,6 +117,7 @@ export const constantRoutes = [{
         component: () => import("@/pages/CommentArea/myComment"),
         meta: {
             info: "我的评价",
+            hidden: true
         }
     }
 
@@ -134,7 +139,8 @@ export const constantRoutes = [{
             info: "自行车大全",
             icon: "iconfont icon-zihangche"
         }
-    }, {
+    },
+    {
         path: "/bicycleDetail",
         name: "自行车详情",
         component: () => import("@/pages/bicycleList/bicycleDetail"),
@@ -179,6 +185,13 @@ export const asyncRoutes = [
             component: () => import("@/pages/role"),
             meta: {
                 info: "权限管理"
+            }
+        }, {
+            path: "/addRole",
+            name: "新增权限",
+            component: () => import("@/pages/role/addRole"),
+            meta: {
+                info: "新增权限"
             }
         },],
     },
@@ -256,23 +269,33 @@ export const asyncRoutes = [
     },
 
     {
-        path: "bicycleList",
-        name: "自行车租赁",
+        path: "bicycleManage",
+        name: "自行车管理",
         component: () => import("@/components/Layout"),
         meta: {
-            info: "自行车租赁",
-            appendChildren: true
+            info: "自行车管理",
 
         },
-        children: [{
-            path: "/addBicycle",
-            name: "新增自行车",
-            component: () => import("@/pages/bicycleList/addBicycle"),
-            meta: {
-                info: "新增自行车",
+        children: [
+            {
+                path: "/bicycleManage",
+                name: "自行车管理",
+                component: () => import("@/pages/bicycleList/bicycleManage"),
+                meta: {
+                    info: "自行车管理",
 
+                }
             }
-        }]
+            , {
+                path: "/addBicycle",
+                name: "新增自行车",
+                component: () => import("@/pages/bicycleList/addBicycle"),
+                meta: {
+                    info: "新增自行车",
+
+                }
+            }
+        ]
 
 
     }
