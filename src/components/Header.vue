@@ -98,6 +98,7 @@ export default {
       sessionStorage.removeItem("tagList");
       // 重置路由
       resetRoute();
+      this.$store.dispatch("userInfo/clearUserRoutes");
       this.$router.replace("/");
     },
     toMyOrder() {

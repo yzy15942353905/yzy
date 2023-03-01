@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h4 class="hear_bg">我的订单</h4>
@@ -10,7 +9,7 @@
       class="formstyle"
     >
       <el-row :gutter="5">
-        <el-col :span="8">
+        <el-col :span="12">
           <el-form-item prop="orderId" label="订单编号">
             <el-input
               placeholder="订单编号"
@@ -18,7 +17,7 @@
               clearable
             ></el-input> </el-form-item
         ></el-col>
-        <el-col :span="8">
+        <el-col :span="12">
           <el-form-item prop="orderStatus" label="订单状态">
             <el-select
               v-model="form.orderStatus"
@@ -38,11 +37,7 @@
         ></el-col>
       </el-row>
       <el-row justify="center" type="flex" class="mt10">
-        <el-button
-          size="small"
-          icon="el-icon-search"
-          type="primary"
-          @click="getMyOrder(1)"
+        <el-button size="small" type="primary" @click="getMyOrder(1)"
           >查 询</el-button
         >
       </el-row>
@@ -100,6 +95,7 @@
         prop="orderStatus"
         label="订单状态"
         width="180"
+        fixed="right"
         :formatter="orderStatus"
       >
       </el-table-column>
@@ -122,7 +118,11 @@
             >结束订单</el-button
           >
           <el-button
-            v-if="scope.row.orderStatus == 2 || scope.row.orderStatus == 4"
+            v-if="
+              scope.row.orderStatus == 2 ||
+              scope.row.orderStatus == 4 ||
+              scope.row.orderStatus == 6
+            "
             @click="deleteOrder(scope.row.orderId)"
             type="text"
             class="deleteBtn"
@@ -130,7 +130,23 @@
             >删除</el-button
           >
           <el-button
-            v-if="scope.row.orderStatus == 3"
+            v-if="scope.row.orderStatus == 3 || scope.row.orderStatus == 7"
+            @click="afterApplyRefund(scope.row.orderId)"
+            type="text"
+            class="deleteBtn"
+            icon="el-icon-delete"
+            >申请退款</el-button
+          >
+          <el-button
+            v-if="scope.row.orderStatus == 5"
+            @click="cancelApplyRefund(scope.row.refundId)"
+            type="text"
+            class="editBtn"
+            icon="el-icon-s-opportunity"
+            >取消申请</el-button
+          >
+          <el-button
+            v-if="scope.row.orderStatus == 3 || scope.row.orderStatus == 7"
             @click="afterCommmentOrder(scope.row.orderId)"
             type="text"
             class="viewBtn"
@@ -154,14 +170,14 @@
     <el-dialog title="结束订单" :visible.sync="dialogVisible" width="70%">
       <el-form ref="order" :model="order" label-width="80px" :rules="rules">
         <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="订单编号">
               <el-input v-model="order.orderId" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="地区:" prop="returnAddress">
               <el-select
                 v-model="order.returnAddress"
@@ -201,21 +217,21 @@
         :rules="rulesComment"
       >
         <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="订单编号：">
               <el-input v-model="commentOrder.orderId" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="评分：" prop="star">
               <el-rate v-model="commentOrder.star"></el-rate>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="8">
+          <el-col :span="12">
             <el-form-item label="评论内容：" prop="commentContent">
               <el-input
                 type="textarea"
@@ -237,6 +253,60 @@
         </el-row>
       </span>
     </el-dialog>
+
+    <el-dialog title="申请退款" :visible.sync="dialogVisibleApply" width="70%">
+      <el-form
+        ref="applyOrder"
+        :model="applyOrder"
+        label-width="120px"
+        :rules="rulesApply"
+      >
+        <el-row :gutter="10" justify="center" type="flex">
+          <el-col :span="12">
+            <el-form-item label="订单编号">
+              <el-input v-model="applyOrder.orderId" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10" justify="center" type="flex">
+          <el-col :span="12">
+            <el-form-item label="申请退款种类:" prop="refundType">
+              <el-select
+                v-model="applyOrder.refundType"
+                placeholder="请选择"
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="item in refundType_options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10" justify="center" type="flex">
+          <el-col :span="12">
+            <el-form-item label="申请退款原因" prop="refundDesc">
+              <el-input
+                v-model="applyOrder.refundDesc"
+                type="textarea"
+                resize="none"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+        <el-row :gutter="10" type="flex" justify="center">
+          <el-button type="primary" @click="applyRefund">申请退款</el-button>
+          <el-button @click="dialogVisibleApply = false">取 消</el-button>
+        </el-row>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -248,6 +318,7 @@ import {
   finishOrder,
   commentOrder,
 } from "@/api/modules/order.js";
+import { applyRefund, cancelApplyRefund } from "@/api/modules/applyRefund.js";
 export default {
   data() {
     return {
@@ -283,12 +354,26 @@ export default {
           label: "地区2",
         },
       ],
+      refundType_options: [
+        {
+          value: 0,
+          label: "自行车体验感极差",
+        },
+        {
+          value: 1,
+          label: "自行车损坏",
+        },
+        {
+          value: 2,
+          label: "其他",
+        },
+      ],
       form: {
         status: 0,
       },
       rules: {
         returnAddress: [
-          { required: true, message: "请选择归还地点", trigger: "blur" },
+          { required: true, message: "请选择归还地点", trigger: "change" },
         ],
       },
       rulesComment: {
@@ -297,14 +382,21 @@ export default {
           { required: true, message: "请输入评价内容！", trigger: "blur" },
         ],
       },
+      rulesApply: {
+        refundType: [
+          { required: true, message: "请选择申请退款种类", trigger: "blur" },
+        ],
+      },
       tableData: [],
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      order: { orderId: "", returnAddress: "" },
+      order: { orderId: "" },
+      applyOrder: {refundType:""},
       dialogVisible: false,
       commentOrder: { orderId: "", commentContent: "", star: 0 },
       dialogVisibleComment: false,
+      dialogVisibleApply: false,
     };
   },
   methods: {
@@ -321,6 +413,9 @@ export default {
         2: "已完成",
         3: "已完成，待评价",
         4: "已取消",
+        5: "申请退款中",
+        6: "申请退款已通过",
+        7: "申请退款已被驳回",
       };
       return obj[row.orderStatus];
     },
@@ -358,11 +453,11 @@ export default {
       }
     },
     // 取消订单
-    async cancelOrder(orderId) {
-      let result = await cancelOrder(orderId);
+    async cancelOrder(refundId) {
+      let result = await cancelOrder(refundId);
 
       result.code == 200
-        ? this.$message.success(result.msg)
+        ? (this.$message.success(result.msg), this.getMyOrder(1))
         : this.$message.error(result.msg);
     },
     // 删除订单
@@ -383,6 +478,7 @@ export default {
           let result = await finishOrder(this.order);
           if (result.code == 200) {
             this.dialogVisible = false;
+            this.getMyOrder(1);
             let msg = "";
             if (result.data) {
               for (let index = 0; index < result.data.length; index++) {
@@ -400,6 +496,9 @@ export default {
       });
     },
     afterCommmentOrder(orderId) {
+      this.$refs["commentOrder"] && this.$refs["commentOrder"].clearValidate();
+      this.commentOrder = {};
+
       this.commentOrder.orderId = orderId;
       this.dialogVisibleComment = true;
     },
@@ -419,6 +518,34 @@ export default {
     handleCurrentChange(val) {
       this.getMyOrder(val);
     },
+    afterApplyRefund(orderId) {
+
+      this.$refs["applyOrder"] && this.$refs["applyOrder"].clearValidate();
+      this.applyOrder = {};
+      this.applyOrder.orderId = orderId;
+      this.dialogVisibleApply = true;
+    },
+    // 申请退款
+    async applyRefund() {
+      let result = await applyRefund(this.applyOrder);
+      if (result.code == 200) {
+        this.dialogVisibleApply = false;
+        this.$message.success(result.msg);
+        this.getMyOrder(1);
+      } else {
+        this.$message.error(result.msg);
+      }
+    },
+    // 取消申请退款
+    async cancelApplyRefund(refundId) {
+      let result = await cancelApplyRefund(refundId);
+      if (result.code == 200) {
+        this.$message.success(result.msg);
+        this.getMyOrder(1);
+      } else {
+        this.$message.error(result.msg);
+      }
+    },
   },
   computed: {},
   beforeUpdate() {
@@ -430,5 +557,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

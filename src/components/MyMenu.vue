@@ -5,6 +5,7 @@
  * @FilePath: \vue_test\src\components\MyMenu.vue
 -->
 <template>
+
   <el-menu
     :class="
       isCollapse

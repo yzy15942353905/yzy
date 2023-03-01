@@ -8,96 +8,50 @@
 -->
 <template>
   <div>
-    <el-form
-      :model="bicycleInfo"
-      ref="bicycleInfo"
-      label-width="150px"
-      :rules="rules"
-    >
+    <el-form :model="bicycleInfo" ref="bicycleInfo" label-width="150px" :rules="rules">
       <el-row :gutter="10" type="flex" justify="center">
         <el-col :span="12">
           <el-form-item label="自行车图片:" prop="bicycleImage">
-            <el-upload
-              list-type="picture-card"
-              class="avatar-uploader"
-              action="/api/file/upload"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccess"
-              :before-upload="beforeAvatarUpload"
-            >
-              <img
-                v-if="bicycleInfo.bicycleImage"
-                :src="bicycleInfo.bicycleImage"
-                class="avatar"
-              />
+            <el-upload list-type="picture-card" class="avatar-uploader" action="/api/file/upload" :show-file-list="false"
+              :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+              <img v-if="bicycleInfo.bicycleImage" :src="bicycleInfo.bicycleImage" class="avatar" />
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
 
           <el-form-item label="自行车名称:" prop="bicycleName">
-            <el-input
-              v-model.trim="bicycleInfo.bicycleName"
-              placeholder=""
-            ></el-input
-          ></el-form-item>
+            <el-input v-model.trim="bicycleInfo.bicycleName" placeholder=""></el-input></el-form-item>
           <el-form-item label="自行车类型:" prop="bicycleType">
             <el-select v-model="bicycleInfo.bicycleType" placeholder="请选择">
-              <el-option
-                v-for="item in type_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
+              <el-option v-for="item in type_options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="地区:" prop="address">
             <el-select v-model="bicycleInfo.address" placeholder="请选择">
-              <el-option
-                v-for="item in address_options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
+              <el-option v-for="item in address_options" :key="item.value" :label="item.label" :value="item.value">
               </el-option>
             </el-select>
           </el-form-item>
 
           <el-form-item label="时价(元):" prop="priceHour">
-            <el-input-number
-              :min="1"
-              v-model="bicycleInfo.priceHour"
-              placeholder=""
-            ></el-input-number
-          ></el-form-item>
+            <el-input-number :min="1" v-model="bicycleInfo.priceHour" placeholder=""
+              :controls="false"></el-input-number></el-form-item>
           <el-form-item label="日价(元):" prop="priceDate">
-            <el-input-number
-              :min="1"
-              v-model="bicycleInfo.priceDate"
-              placeholder=""
-            ></el-input-number
-          ></el-form-item>
+            <el-input-number :min="1" v-model="bicycleInfo.priceDate" placeholder=""
+              :controls="false"></el-input-number></el-form-item>
           <el-form-item label="月价(元):" prop="priceMonth">
-            <el-input-number
-              :min="1"
-              v-model="bicycleInfo.priceMonth"
-              placeholder=""
-            ></el-input-number
-          ></el-form-item>
+            <el-input-number :min="1" v-model="bicycleInfo.priceMonth" placeholder=""
+              :controls="false"></el-input-number></el-form-item>
           <el-form-item label="自行车描述:">
-            <el-input
-              resize="none"
-              type="textarea"
-              v-model="bicycleInfo.bicycleDesc"
-            ></el-input>
+            <el-input resize="none" type="textarea" v-model="bicycleInfo.bicycleDesc"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row type="flex" justify="center">
-        <el-button type="success" size="small" @click="addBicycleInfo">
-          新增</el-button
-        >
+        <el-button type="success" size="small" @click="addBicycleInfo" icon="el-icon-circle-plus-outline">
+          新增</el-button>
       </el-row>
     </el-form>
   </div>
@@ -194,6 +148,7 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
@@ -206,6 +161,7 @@ export default {
   line-height: 148px;
   text-align: center;
 }
+
 .avatar {
   width: 148px;
   height: 148px;

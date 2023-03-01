@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-29 11:18:04
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-02 11:11:11
+ * @LastEditTime: 2023-02-20 16:19:21
  * @FilePath: \yzy-2\src\api\modules\coupon.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -70,3 +70,12 @@ export const getMyUsableCoupon = (params) => {
     })
 }
 
+// 新增或修改优惠卷
+
+export const saveOrUpdate = (data) => {
+    return request({
+        url: `/coupon`,
+        method: "post",
+        data
+    })
+}

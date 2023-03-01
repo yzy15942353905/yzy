@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-26 15:47:08
- * @LastEditTime: 2023-02-10 13:38:09
+ * @LastEditTime: 2023-03-01 11:31:16
  * @FilePath: \vue_test\src\pages\role\index.vue
 -->
 <template>
@@ -34,17 +34,9 @@
             <el-form-item label="权限id">
               <el-input v-model="roleForm.roleId" disabled></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="12">
             <el-form-item label="权限名称" prop="roleName">
               <el-input v-model="roleForm.roleName"></el-input>
             </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="10" justify="center" type="flex">
-          <el-col :span="12">
             <el-form-item label="权限描述">
               <el-input
                 type="textarea"
@@ -53,6 +45,18 @@
               ></el-input>
             </el-form-item>
           </el-col>
+          <el-col :span="12" :offset="0">
+            <el-tree
+              ref="tree"
+              :data="treeData"
+              show-checkbox
+              node-key="id"
+              default-expand-all
+              :props="defaultProps"
+              :default-checked-keys="defaultCheckedList"
+            >
+            </el-tree
+          ></el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -65,17 +69,26 @@
 
 <script>
 import { getRoleList, getRoleById, updateRole } from "@/api/modules/role";
+import { asyncRoutes } from "@/router/index.js";
 export default {
   data() {
     return {
       roleInfo: [],
       dialogVisible: false,
-      roleForm: {},
+      roleForm: {
+        roleMenu: [],
+      },
       rules: {
         roleName: [
           { required: true, message: "请输入角色名称", trigger: "blur" },
         ],
       },
+      treeData: asyncRoutes,
+      defaultProps: {
+        children: "children",
+        label: "name",
+      },
+      defaultCheckedList: [],
     };
   },
   methods: {
@@ -96,7 +109,16 @@ export default {
       let result = await getRoleById(roleId);
       if (result.code == 200) {
         this.roleForm = result.data;
-        this.dialogVisible = true;
+        this.defaultCheckedList = result.data.roleMenu
+          ? result.data.roleMenu.split(",")
+          : [];
+        // 调用setCheckedKeys方法，将需要选中的key值数组传进去，他会重新设置选中状态
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(this.defaultCheckedList);
+        });
+        setTimeout(() => {
+          this.dialogVisible = true;
+        }, 0);
       } else {
         this.$message.error(result.msg);
       }
@@ -105,7 +127,12 @@ export default {
     async updateRole() {
       this.$refs["roleForm"].validate(async (valid) => {
         if (valid) {
-          let result = await updateRole(this.roleForm);
+          let zi = this.$refs.tree.getCheckedKeys(); //返回选中子节点的key
+          let fu = this.$refs.tree.getHalfCheckedKeys(); //返回选中子节点的父节点的key
+          let new1 = zi.concat(fu);
+          let form = JSON.parse(JSON.stringify(this.roleForm));
+          form.roleMenu = new1.join();
+          let result = await updateRole(form);
           if (result.code == 200) {
             this.$message.success(result.msg);
             this.dialogVisible = false;

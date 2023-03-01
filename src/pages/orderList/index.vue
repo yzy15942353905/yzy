@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h4 class="hear_bg">全部订单</h4>
@@ -16,6 +15,7 @@
               placeholder="订单编号"
               v-model.trim="form.orderId"
               clearable
+              dis
             ></el-input> </el-form-item
         ></el-col>
         <el-col :span="8">
@@ -48,7 +48,13 @@
       </el-row>
     </el-form>
     <h4 class="hear_bg">全部订单列表</h4>
-    <el-table :data="tableData" style="width: 100%" border stripe>
+    <el-table
+      :data="tableData"
+      style="width: 100%"
+      border
+      stripe
+      ref="multipleTable"
+    >
       <el-table-column prop="orderId" label="订单编号" width="80">
       </el-table-column>
       <el-table-column prop="bicycleId" label="自行车编号" width="100">
@@ -104,6 +110,7 @@
         prop="orderStatus"
         label="订单状态"
         width="180"
+        fixed="right"
         :formatter="orderStatus"
       >
       </el-table-column>
@@ -147,6 +154,18 @@ export default {
           codeCd: 4,
           codeName: "已取消",
         },
+        {
+          codeCd: 5,
+          codeName: "申请退款中",
+        },
+        {
+          codeCd: 6,
+          codeName: "申请退款已通过",
+        },
+        {
+          codeCd: 7,
+          codeName: "申请退款已被驳回",
+        },
       ],
       form: {
         status: 0,
@@ -164,6 +183,7 @@ export default {
         1: "是",
         0: "否",
       };
+
       return obj[value];
     },
     orderStatus(row) {
@@ -172,6 +192,9 @@ export default {
         2: "已完成",
         3: "已完成，待评价",
         4: "已取消",
+        5: "申请退款中",
+        6: "申请退款已通过",
+        7: "申请退款已被驳回",
       };
       return obj[row.orderStatus];
     },
@@ -201,6 +224,10 @@ export default {
           this.total = 0;
         } else {
           this.tableData = result.data.records;
+          this.$nextTick(() => {
+            this.$refs.multipleTable.doLayout();
+            // el-table加ref="multipleTable"
+          });
           this.total = result.data.total;
         }
       }
@@ -219,5 +246,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

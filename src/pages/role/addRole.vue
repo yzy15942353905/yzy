@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-02-10 11:12:15
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-10 13:37:11
+ * @LastEditTime: 2023-03-01 09:05:18
  * @FilePath: \yzy-2\src\pages\role\addRole.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,15 +16,11 @@
       :rules="rules"
       class="formstyle"
     >
-      <el-row :gutter="10" justify="center" type="flex">
+      <el-row :gutter="200">
         <el-col :span="12">
           <el-form-item label="权限名称" prop="roleName">
             <el-input v-model="roleForm.roleName"></el-input>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="10" justify="center" type="flex">
-        <el-col :span="12">
           <el-form-item label="权限描述">
             <el-input
               type="textarea"
@@ -33,9 +29,27 @@
             ></el-input>
           </el-form-item>
         </el-col>
+        <el-col :span="12">
+          <el-tree
+            ref="tree"
+            :data="data"
+            show-checkbox
+            node-key="id"
+            default-expand-all
+            :props="defaultProps"
+          >
+          </el-tree>
+        </el-col>
       </el-row>
+
       <el-row justify="center" type="flex">
-        <el-button type="success" size="mini" @click="addRole">新增</el-button>
+        <el-button
+          type="success"
+          size="mini"
+          @click="addRole"
+          icon="el-icon-circle-plus-outline"
+          >新增</el-button
+        >
       </el-row>
     </el-form>
   </div>
@@ -43,6 +57,7 @@
 
 <script>
 import { addRole } from "@/api/modules/role";
+import { asyncRoutes } from "@/router/index.js";
 export default {
   data() {
     return {
@@ -52,12 +67,39 @@ export default {
         ],
       },
       roleForm: {},
+      data: asyncRoutes,
+      defaultProps: {
+        children: "children",
+        label: "name",
+      },
     };
   },
   methods: {
+    defaultChecked() {
+      // 默认选中
+      this.$nextTick(() => {
+        const arr = [];
+        this.menus.forEach((item) => {
+          if (
+            !this.$refs.tree.getNode(item.id).childNodes ||
+            !this.$refs.tree.getNode(item.id).childNodes.length
+          ) {
+            arr.push(item.id);
+          }
+        });
+        this.$refs.tree.setCheckedKeys(arr);
+      });
+    },
+    check(param1, param2) {
+      console.log(new1);
+    },
     async addRole() {
       this.$refs["roleForm"].validate(async (valid) => {
         if (valid) {
+          let zi = this.$refs.tree.getCheckedKeys(); //返回选中子节点的key
+          let fu = this.$refs.tree.getHalfCheckedKeys(); //返回选中子节点的父节点的key
+          let new1 = zi.concat(fu);
+          this.roleForm.roleMenu = new1.join();
           let result = await addRole(this.roleForm);
           if (result.code == 200) {
             this.$confirm(result.msg + "是否继续添加角色, 是否继续?", "提示", {
@@ -67,6 +109,9 @@ export default {
             })
               .then(() => {
                 this.roleForm = {};
+                this.$nextTick(() => {
+                  this.$refs.tree.setCheckedKeys([]);
+                });
               })
               .catch(() => {
                 this.$router.push("/roleSystem");
@@ -82,5 +127,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

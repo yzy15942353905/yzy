@@ -23,7 +23,7 @@ export default {
     getUserRoutes(asyncRoutes, roleRoutes) {
         if (Array.isArray(asyncRoutes) && Array.isArray(roleRoutes)) {
             asyncRoutes = asyncRoutes.filter((v) => {
-                if (roleRoutes.indexOf(v.name) != -1) {
+                if (roleRoutes.indexOf(v.id) != -1) {
 
                     if (v.children && v.children.length != 0) {
 
@@ -141,9 +141,7 @@ export default {
 ,
 
     routersConcat(constantRoutes, roleRoutes) {
-
-        for (let j = 0; j < roleRoutes.length; j++) {
-         
+        for (let j = 0; j < roleRoutes.length; j++) {         
             if (roleRoutes[j].meta.appendChildren) {         
                 for (let index = 0; index < constantRoutes.length; index++) {
                     if (constantRoutes[index].path == roleRoutes[j].path) {
