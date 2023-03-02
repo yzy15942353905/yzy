@@ -1,7 +1,7 @@
 <!--
  * @Description:  申请退款订单列表
  * @Date: 2022-11-26 15:47:08
- * @LastEditTime: 2023-02-28 11:08:30
+ * @LastEditTime: 2023-03-02 13:45:13
  * @FilePath: \vue_test\src\pages\role\index.vue
 -->
 <template>
@@ -15,7 +15,11 @@
       size="normal"
     >
       <el-form-item label="退款订单状态：">
-        <el-select v-model="form.status" @change="getApplyRefundList">
+        <el-select
+          :popper-append-to-body="false"
+          v-model="form.status"
+          @change="getApplyRefundList"
+        >
           <el-option
             v-for="item in options"
             :key="item.codeId"
@@ -26,59 +30,64 @@
         </el-select>
       </el-form-item>
     </el-form>
-    
+
     <div v-if="refundOrderList.length != 0">
-      <el-descriptions
-        title="退款信息"
-        :column="3"
-        class="descriptionsStyle"
+      <div
         v-for="item in refundOrderList"
         :key="item.refundId"
+        style="position: relative"
       >
-        <!-- <el-descriptions-item label="退款流水id">{{
+        <el-descriptions title="退款信息" :column="3" class="descriptionsStyle">
+          <!-- <el-descriptions-item label="退款流水id">{{
           item.refundId
         }}</el-descriptions-item> -->
-        <el-descriptions-item label="申请退款人昵称">{{
-          item.userName
-        }}</el-descriptions-item>
-        <el-descriptions-item label="订单金额">{{
-          item.orderAccount + " 元"
-        }}</el-descriptions-item>
+          <el-descriptions-item label="申请退款人昵称">{{
+            item.userName
+          }}</el-descriptions-item>
+          <el-descriptions-item label="订单金额">{{
+            item.orderAccount + " 元"
+          }}</el-descriptions-item>
 
-        <!-- 申请种类必填 -->
-        <el-descriptions-item label="申请退款类型">{{
-          item.refundType
-        }}</el-descriptions-item>
-        <!-- 申请原因选填 -->
-        <el-descriptions-item label="申请退款原因">{{
-          item.refundDesc
-        }}</el-descriptions-item>
-        <el-descriptions-item label="申请时间">{{
-          item.applyDate
-        }}</el-descriptions-item>
+          <!-- 申请种类必填 -->
+          <el-descriptions-item label="申请退款类型">{{
+            item.refundType
+          }}</el-descriptions-item>
+          <!-- 申请原因选填 -->
+          <el-descriptions-item label="申请退款原因">{{
+            item.refundDesc
+          }}</el-descriptions-item>
+          <el-descriptions-item label="申请时间">{{
+            item.applyDate
+          }}</el-descriptions-item>
 
-        <el-descriptions-item label="处理人昵称" v-if="item.ifHandle == 1">{{
-          item.handleName
-        }}</el-descriptions-item>
-        <el-descriptions-item label="处理人意见" v-if="item.ifHandle == 1">{{
-          item.handleComment
-        }}</el-descriptions-item>
-        <el-descriptions-item label="处理时间" v-if="item.ifHandle == 1">{{
-          item.handleDate
-        }}</el-descriptions-item>
+          <el-descriptions-item label="处理人昵称" v-if="item.ifHandle == 1">{{
+            item.handleName
+          }}</el-descriptions-item>
+          <el-descriptions-item label="处理人意见" v-if="item.ifHandle == 1">{{
+            item.handleComment
+          }}</el-descriptions-item>
+          <el-descriptions-item label="处理时间" v-if="item.ifHandle == 1">{{
+            item.handleDate
+          }}</el-descriptions-item>
 
-        <el-descriptions-item label="操作" v-if="item.ifHandle == 0">
-          <el-button
-            type="success"
-            size="mini"
-            @click="afterHandle(item.refundId)"
-            >处理</el-button
-          >
-        </el-descriptions-item>
-        <el-descriptions-item label="处理结果" v-else>{{
-          item.ifApproval
-        }}</el-descriptions-item>
-      </el-descriptions>
+          <el-descriptions-item label="操作" v-if="item.ifHandle == 0">
+            <el-button
+              type="success"
+              size="mini"
+              @click="afterHandle(item.refundId)"
+              >处理</el-button
+            >
+          </el-descriptions-item>
+          <el-descriptions-item label="处理结果" v-else>{{
+            item.ifApproval
+          }}</el-descriptions-item>
+        </el-descriptions>
+        <svg-icon
+          v-if="item.ifHandle"
+          :icon-class="getRightOrError(item.ifApproval)"
+          class="rightOrError"
+        />
+      </div>
     </div>
     <el-empty description="暂无此类订单" v-else></el-empty>
     <el-dialog title="处理退款订单" :visible.sync="dialogVisible" width="70%">
@@ -258,7 +267,12 @@ export default {
         }
       });
     },
+    // getRightOrError
+    getRightOrError(ifApproval) {
+      return ifApproval == 1 ? "duigou1" : "cuowu";
+    },
   },
+  computed: {},
   mounted() {
     this.getApplyRefundList();
   },
@@ -274,5 +288,11 @@ export default {
 }
 .descriptionsStyle:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+}
+.rightOrError {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  font-size: 7vh;
 }
 </style>

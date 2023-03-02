@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-02-10 11:12:15
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-03-01 09:05:18
+ * @LastEditTime: 2023-03-02 10:52:32
  * @FilePath: \yzy-2\src\pages\role\addRole.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -57,7 +57,7 @@
 
 <script>
 import { addRole } from "@/api/modules/role";
-import { asyncRoutes } from "@/router/index.js";
+import { asyncRoutes } from "@/router/index";
 export default {
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
         ],
       },
       roleForm: {},
-      data: asyncRoutes,
+      data: asyncRoutes(),
       defaultProps: {
         children: "children",
         label: "name",
@@ -75,24 +75,6 @@ export default {
     };
   },
   methods: {
-    defaultChecked() {
-      // 默认选中
-      this.$nextTick(() => {
-        const arr = [];
-        this.menus.forEach((item) => {
-          if (
-            !this.$refs.tree.getNode(item.id).childNodes ||
-            !this.$refs.tree.getNode(item.id).childNodes.length
-          ) {
-            arr.push(item.id);
-          }
-        });
-        this.$refs.tree.setCheckedKeys(arr);
-      });
-    },
-    check(param1, param2) {
-      console.log(new1);
-    },
     async addRole() {
       this.$refs["roleForm"].validate(async (valid) => {
         if (valid) {
@@ -123,6 +105,9 @@ export default {
         }
       });
     },
+  },
+  mounted() {
+    console.log(asyncRoutes);
   },
 };
 </script>

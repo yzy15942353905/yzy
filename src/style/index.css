@@ -1,0 +1,97 @@
+code {
+  line-height: 1.8;
+  font-family: Menlo, Monaco, Consolas, Courier, monospace;
+  font-size: 12px;
+  padding: 18px 24px;
+  background-color: #fafafa;
+  border: 1px solid #eaeefb;
+  margin-bottom: 25px;
+  border-radius: 4px;
+  -webkit-font-smoothing: auto;
+  display: block;
+  /* 换行 */
+  white-space: pre-wrap;
+}
+.formstyle {
+  padding: 15px;
+  border: 1px solid #eee;
+  margin-bottom: 30px;
+}
+.formstyle .el-row {
+  margin-bottom: 10px !important;
+}
+.formstyle .el-form-item {
+  margin-bottom: 2px;
+  background: #edf6ff;
+  padding: 6px 10px;
+}
+/* fade-transform */
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all 0.5s;
+}
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.el-menu-item.is-active {
+  background-color: #ecf5ff !important;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.hear_bg {
+  background: url(../assets/img/tabs_active.png) no-repeat;
+  display: inline-block;
+  color: #fff;
+  padding: 8px 20px 8px 10px;
+  font-weight: normal;
+  margin: 0;
+  background-size: 100% 100%;
+  font-size: 15px;
+}
+/* 滚动条的宽度 */
+.el-table__body-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #ddd;
+  border-radius: 3px;
+}
+.el-scrollbar__wrap::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+/* .el-row {
+    margin-bottom: 10px !important;
+} */
+.pageStyle {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+.viewBtn {
+  color: #409ffe;
+}
+.editBtn {
+  color: #E6A23C;
+}
+.deleteBtn {
+  color: #f56C6C;
+}
+.addBtn {
+  color: #67C23A;
+}
+.icon-zihangche {
+  font-size: 22px !important;
+}
+::v-deep .popper-select {
+  position: absolute !important;
+  top: 35px !important;
+  left: 0px !important;
+}

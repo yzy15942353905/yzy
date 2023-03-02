@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-03-01 11:09:27
+ * @LastEditTime: 2023-03-02 11:00:12
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store";
@@ -38,6 +38,7 @@ const actions = {
     //   return;
     // }
 
+    // store.state.userInfo.userInfo.roleMenu 后端返回的异步路由id列表
     let roleMenu = store.state.userInfo.userInfo.roleMenu
       ? store.state.userInfo.userInfo.roleMenu.split(",")
       : [];
@@ -46,12 +47,10 @@ const actions = {
       roleMenu[index] = Number(roleMenu[index]);
     }
     let getRouters = roleMenu;
-
-    let roleRoutes = commonUtils.getUserRoutes(asyncRoutes, getRouters);
-    console.log("roleRoutes", roleRoutes);
+    let roleRoutes = commonUtils.getUserRoutes(asyncRoutes(), getRouters);
     let userRoutes = constantRoutes.concat(roleRoutes);
-    console.log("   userRoutes: ", userRoutes);
-    // userRoutes = userRoutesFilter(userRoutes)
+
+    // 将路由添加到路由表中
     roleRoutes.forEach((roleRoute) => {
       router.addRoute(roleRoute);
     });

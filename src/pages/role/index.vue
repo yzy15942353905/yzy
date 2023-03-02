@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-26 15:47:08
- * @LastEditTime: 2023-03-01 11:31:16
+ * @LastEditTime: 2023-03-02 10:42:29
  * @FilePath: \vue_test\src\pages\role\index.vue
 -->
 <template>
@@ -69,7 +69,7 @@
 
 <script>
 import { getRoleList, getRoleById, updateRole } from "@/api/modules/role";
-import { asyncRoutes } from "@/router/index.js";
+import { asyncRoutes } from "@/router/index";
 export default {
   data() {
     return {
@@ -83,7 +83,7 @@ export default {
           { required: true, message: "请输入角色名称", trigger: "blur" },
         ],
       },
-      treeData: asyncRoutes,
+      treeData: asyncRoutes(),
       defaultProps: {
         children: "children",
         label: "name",
@@ -109,12 +109,13 @@ export default {
       let result = await getRoleById(roleId);
       if (result.code == 200) {
         this.roleForm = result.data;
-        this.defaultCheckedList = result.data.roleMenu
-          ? result.data.roleMenu.split(",")
+        this.defaultCheckedList = result.data.newRoleMenu
+          ? result.data.newRoleMenu.split(",")
           : [];
         // 调用setCheckedKeys方法，将需要选中的key值数组传进去，他会重新设置选中状态
         this.$nextTick(() => {
-          this.$refs.tree.setCheckedKeys(this.defaultCheckedList);
+          this.$refs.tree &&
+            this.$refs.tree.setCheckedKeys(this.defaultCheckedList);
         });
         setTimeout(() => {
           this.dialogVisible = true;
@@ -132,6 +133,7 @@ export default {
           let new1 = zi.concat(fu);
           let form = JSON.parse(JSON.stringify(this.roleForm));
           form.roleMenu = new1.join();
+          form.newRoleMenu = zi.join();
           let result = await updateRole(form);
           if (result.code == 200) {
             this.$message.success(result.msg);

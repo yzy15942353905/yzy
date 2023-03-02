@@ -26,6 +26,7 @@
         <el-col :span="8">
           <el-form-item prop="coupon" label="状态">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.status"
               value-key=""
               placeholder="请选择"
@@ -188,5 +189,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

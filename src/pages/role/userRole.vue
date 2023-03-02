@@ -1,9 +1,3 @@
-<!--
- * @Description: 
- * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-02-08 14:04:22
- * @FilePath: \vue_test\src\pages\userList\index.vue
--->
 <template>
   <div>
     <h4 class="hear_bg">用户查询</h4>
@@ -31,24 +25,6 @@
               clearable
             ></el-input> </el-form-item
         ></el-col>
-        <el-col :span="8">
-          <el-form-item prop="sex" label="性别">
-            <el-select
-              :popper-append-to-body="false"
-              v-model="form.sex"
-              placeholder="请选择"
-              style="width: 100%"
-              clearable=""
-            >
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              >
-              </el-option>
-            </el-select> </el-form-item
-        ></el-col>
       </el-row>
       <el-row justify="center" type="flex" class="mt10">
         <el-button
@@ -66,37 +42,25 @@
       <el-table-column prop="nickName" label="昵称"> </el-table-column>
       <el-table-column prop="phone" label="手机号码" width="180">
       </el-table-column>
-      <el-table-column prop="sex" label="性别" width="80"> </el-table-column>
-      <el-table-column prop="points" label="积分" width="80"> </el-table-column>
-      <el-table-column prop="credit" label="信誉度" width="80">
-      </el-table-column>
-      <el-table-column prop="address" label="地址" width="300">
-      </el-table-column>
-      <el-table-column prop="createTime" label="创建时间" width="180">
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" width="280">
+      <el-table-column fixed="right" label="修改权限" width="280">
         <template slot-scope="scope">
-          <el-button
-            @click="lookdDetail(scope.row.id)"
-            class="viewBtn"
-            type="text"
-            icon="el-icon-view"
-            >查看详情</el-button
+          <el-select
+            :popper-append-to-body="false"
+            v-model="scope.row.role"
+            value-key=""
+            placeholder=""
+            clearable
+            filterable
+            @change="(val) => selectChange(val, scope.row.id)"
           >
-          <el-button
-            @click="deleteById(scope.row.id)"
-            type="text"
-            class="deleteBtn"
-            icon="el-icon-delete"
-            >删除</el-button
-          >
-          <el-button
-            @click="update(scope.row)"
-            type="text"
-            icon="el-icon-edit"
-            class="editBtn"
-            >修改</el-button
-          >
+            <el-option
+              v-for="item in options"
+              :key="item.roleId"
+              :label="item.roleName"
+              :value="item.roleId"
+            >
+            </el-option>
+          </el-select>
         </template>
       </el-table-column>
     </el-table>
@@ -120,6 +84,7 @@ import {
   getById,
   savaOrUpdate,
 } from "@/api/modules/user.js";
+import { updateUserRole, RoleList } from "@/api/modules/role.js";
 export default {
   data() {
     return {
@@ -129,14 +94,37 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      options: [
-        { lable: "男", value: "男" },
-        { lable: "女", value: "女" },
-        { lable: "保密", value: "保密" },
-      ],
+      options: [],
     };
   },
   methods: {
+    async RoleList() {
+      let result = await RoleList();
+
+      if (result.code == 200) {
+        this.options = result.data;
+        for (let index = 0; index < this.options.length; index++) {
+          this.options[index].roleId = this.options[index].roleId + "";
+        }
+      } else {
+        this.$message.error(result.msg);
+      }
+      this.findPage(1);
+    },
+    async selectChange(roleId, userId) {
+      let form = {
+        roleId,
+        userId,
+      };
+      let result = await updateUserRole(form);
+      if (result.code == 200) {
+        this.$message.success(result.msg);
+        this.findPage(1);
+      } else {
+        this.$message.error(result.msg);
+      }
+    },
+
     async findPage(pageNum) {
       pageNum && (this.form.pageNum = pageNum);
       this.form.pageSize = this.pageSize;
@@ -188,8 +176,8 @@ export default {
       this.findPage(val);
     },
   },
-  mounted() {
-    this.findPage(1);
+  created() {
+    this.RoleList();
   },
 };
 </script>

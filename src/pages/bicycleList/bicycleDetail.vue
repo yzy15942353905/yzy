@@ -2,7 +2,7 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-18 15:52:06
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-07 14:28:55
+ * @LastEditTime: 2023-03-02 11:27:00
  * @FilePath: \yzy-2\src\pages\bicycleList\bicycleDetail.vue
  * @Description: 自行车详情页
 -->
@@ -75,6 +75,8 @@
                 <div style="margin-top: 20px">
                   请选择优惠卷：
                   <el-select
+                    :popper-append-to-body="false"
+                    style="position: relative"
                     v-model="form.couponId"
                     placeholder="请选择"
                     @focus="selectFocus"

@@ -21,6 +21,7 @@
         <el-col :span="8">
           <el-form-item prop="orderStatus" label="订单状态">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.orderStatus"
               value-key=""
               placeholder="请选择"

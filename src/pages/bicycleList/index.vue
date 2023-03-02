@@ -34,7 +34,7 @@
         <el-card :body-style="{ padding: '0px' }" shadow="hover">
           <img
             :src="bicycle.bicycleImage"
-            class="image img"
+            class="image"
             @error="setDefaultImage"
             @click="lookdDetail(bicycle.bicycleId)"
           />

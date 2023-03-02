@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-03-01 08:57:07
+ * @LastEditTime: 2023-03-02 11:04:02
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from "vue";
@@ -10,7 +10,7 @@ import Router from "vue-router";
 Vue.use(Router);
 export const constantRoutes = [
   {
-    name: "首页",
+    name: "首页❀",
     path: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -47,8 +47,8 @@ export const constantRoutes = [
     },
   },
   {
-    name: "系统管理",
-    path: "systems",
+    name: "系统管理#",
+    path: "/systems#",
     redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -67,8 +67,8 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "personal",
-    name: "个人中心",
+    path: "/personal#",
+    name: "个人中心#",
     component: () => import("@/components/Layout"),
     meta: {
       hidden: true,
@@ -132,8 +132,8 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "bicycleList",
-    name: "自行车租赁",
+    path: "/bicycleList",
+    name: "自行车租赁#",
     component: () => import("@/components/Layout"),
     meta: {
       info: "自行车租赁",
@@ -179,11 +179,11 @@ export const constantRoutes = [
   // }
 ];
 
-export const asyncRoutes = [
+export const asyncRoutes = () => [
   {
     id: 1,
-    path: "roleSystem",
-    name: "权限管理",
+    path: "/roleSystem#",
+    name: "权限管理#",
     component: () => import("@/components/Layout"),
     meta: {
       info: "权限管理",
@@ -208,12 +208,21 @@ export const asyncRoutes = [
           info: "新增权限",
         },
       },
+      {
+        id: 4,
+        path: "/userRole",
+        name: "用户角色管理",
+        component: () => import("@/pages/role/userRole"),
+        meta: {
+          info: "用户角色管理",
+        },
+      },
     ],
   },
   {
-    id: 4,
-    path: "userSystem",
-    name: "用户管理",
+    id: 5,
+    path: "/userSystem#",
+    name: "用户管理#",
     redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -222,7 +231,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        id: 5,
+        id: 6,
         path: "/userList",
         name: "用户列表",
         component: () => import("@/pages/userList"),
@@ -233,9 +242,9 @@ export const asyncRoutes = [
     ],
   },
   {
-    id: 6,
-    path: "couponList",
-    name: "优惠卷管理",
+    id: 7,
+    path: "/couponList#",
+    name: "优惠卷管理#",
     redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -244,7 +253,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        id: 7,
+        id: 8,
         path: "/couponList",
         name: "优惠卷管理",
         component: () => import("@/pages/couponList"),
@@ -253,7 +262,7 @@ export const asyncRoutes = [
         },
       },
       {
-        id: 8,
+        id: 9,
         path: "/addCoupon",
         name: "新增优惠卷",
         component: () => import("@/pages/couponList/addCoupon"),
@@ -264,9 +273,9 @@ export const asyncRoutes = [
     ],
   },
   {
-    id: 9,
-    path: "orderList",
-    name: "订单管理",
+    id: 10,
+    path: "/orderList#",
+    name: "订单管理#",
     redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -275,7 +284,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        id: 10,
+        id: 11,
         path: "/orderList",
         name: "订单管理",
         component: () => import("@/pages/orderList"),
@@ -286,9 +295,9 @@ export const asyncRoutes = [
     ],
   },
   {
-    id: 11,
-    path: "allComment",
-    name: "评价管理",
+    id: 12,
+    path: "/allComment#",
+    name: "评价管理#",
     redirect: "/index",
     component: () => import("@/components/Layout"),
     meta: {
@@ -297,7 +306,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        id: 12,
+        id: 13,
         path: "/allComment",
         name: "评价管理",
         component: () => import("@/pages/CommentArea/allComment"),
@@ -309,16 +318,16 @@ export const asyncRoutes = [
   },
 
   {
-    id: 13,
-    path: "bicycleManage",
-    name: "自行车管理",
+    id: 14,
+    path: "/bicycleManage#",
+    name: "自行车管理#",
     component: () => import("@/components/Layout"),
     meta: {
       info: "自行车管理",
     },
     children: [
       {
-        id: 14,
+        id: 15,
         path: "/bicycleManage",
         name: "自行车管理",
         component: () => import("@/pages/bicycleList/bicycleManage"),
@@ -327,7 +336,7 @@ export const asyncRoutes = [
         },
       },
       {
-        id: 15,
+        id: 16,
         path: "/addBicycle",
         name: "新增自行车",
         component: () => import("@/pages/bicycleList/addBicycle"),
@@ -338,16 +347,16 @@ export const asyncRoutes = [
     ],
   },
   {
-    id: 16,
-    path: "applyRefundManage",
-    name: "退款订单管理",
+    id: 17,
+    path: "/applyRefundManage#",
+    name: "退款订单管理#",
     component: () => import("@/components/Layout"),
     meta: {
       info: "退款订单管理",
     },
     children: [
       {
-        id: 17,
+        id: 18,
         path: "/applyRefundManage",
         name: "退款订单管理",
         component: () => import("@/pages/orderList/applyRefundOrder"),

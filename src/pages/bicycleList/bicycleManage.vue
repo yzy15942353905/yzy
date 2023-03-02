@@ -1,8 +1,10 @@
 <!--
- * @Description: 
- * @Date: 2022-11-24 16:38:36
- * @LastEditTime: 2023-02-08 13:35:57
- * @FilePath: \vue_test\src\pages\userList\index.vue
+ * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @Date: 2023-02-08 09:03:20
+ * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
+ * @LastEditTime: 2023-03-02 14:20:05
+ * @FilePath: \毕业设计-vue\src\pages\bicycleList\bicycleManage.vue
+ * @Description: 自行车管理
 -->
 <template>
   <div>
@@ -26,6 +28,7 @@
         <el-col :span="8">
           <el-form-item prop="address" label="地区">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.address"
               placeholder="请选择"
               style="width: 100%"
@@ -42,6 +45,7 @@
         <el-col :span="8">
           <el-form-item prop="status" label="状态">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.status"
               placeholder="请选择"
               style="width: 100%"
@@ -59,6 +63,7 @@
         <el-col :span="8">
           <el-form-item prop="bicycleType" label="自行车类型">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.bicycleType"
               placeholder="请选择"
               style="width: 100%"
@@ -323,5 +328,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -20,6 +20,7 @@
         <el-col :span="12">
           <el-form-item prop="orderStatus" label="订单状态">
             <el-select
+              :popper-append-to-body="false"
               v-model="form.orderStatus"
               value-key=""
               placeholder="请选择"
@@ -180,6 +181,7 @@
           <el-col :span="12">
             <el-form-item label="地区:" prop="returnAddress">
               <el-select
+                :popper-append-to-body="false"
                 v-model="order.returnAddress"
                 placeholder="请选择"
                 style="width: 100%"
@@ -272,6 +274,7 @@
           <el-col :span="12">
             <el-form-item label="申请退款种类:" prop="refundType">
               <el-select
+                :popper-append-to-body="false"
                 v-model="applyOrder.refundType"
                 placeholder="请选择"
                 style="width: 100%"
@@ -392,7 +395,7 @@ export default {
       pageNum: 1,
       pageSize: 10,
       order: { orderId: "" },
-      applyOrder: {refundType:""},
+      applyOrder: { refundType: "" },
       dialogVisible: false,
       commentOrder: { orderId: "", commentContent: "", star: 0 },
       dialogVisibleComment: false,
@@ -519,7 +522,6 @@ export default {
       this.getMyOrder(val);
     },
     afterApplyRefund(orderId) {
-
       this.$refs["applyOrder"] && this.$refs["applyOrder"].clearValidate();
       this.applyOrder = {};
       this.applyOrder.orderId = orderId;
