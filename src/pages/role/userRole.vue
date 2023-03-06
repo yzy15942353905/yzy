@@ -45,11 +45,10 @@
       <el-table-column fixed="right" label="修改权限" width="280">
         <template slot-scope="scope">
           <el-select
-            :popper-append-to-body="false"
             v-model="scope.row.role"
             value-key=""
             placeholder=""
-            clearable
+         
             filterable
             @change="(val) => selectChange(val, scope.row.id)"
           >

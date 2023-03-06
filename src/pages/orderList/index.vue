@@ -115,6 +115,17 @@
         :formatter="orderStatus"
       >
       </el-table-column>
+      <el-table-column fixed="right" label="操作" width="280">
+        <template slot-scope="scope">
+          <el-button
+            @click="getTimeLine(scope.row.orderId)"
+            type="text"
+            class="viewBtn"
+            icon="el-icon-s-promotion"
+            >查看时间线</el-button
+          >
+        </template>
+      </el-table-column>
     </el-table>
     <div class="block pageStyle">
       <el-pagination
@@ -126,11 +137,38 @@
       >
       </el-pagination>
     </div>
+
+    <el-dialog
+      title="订单时间线"
+      :visible.sync="timeLineFlag"
+      width="30%"
+      @close="timeLineFlag = false"
+    >
+      <div v-if="timeLineList.length != 0">
+        <el-timeline v-for="item in timeLineList" :key="item.timeLineId">
+          <el-timeline-item
+            :timestamp="item.operatorTime"
+            placement="top"
+            type="success"
+          >
+            <el-card>
+              <h2>{{ item.detail }}</h2>
+              <hr />
+              <p>{{ item.operatorName + " 操作于 " + item.operatorTime }}</p>
+            </el-card>
+          </el-timeline-item>
+        </el-timeline>
+      </div>
+      <el-empty description="该订单暂无跟踪时间线！" v-else></el-empty>
+      <span slot="footer">
+        <el-button @click="timeLineFlag = false">Cancel</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getMyOrder } from "@/api/modules/order.js";
+import { getMyOrder, getTimeLine } from "@/api/modules/order.js";
 export default {
   data() {
     return {
@@ -176,6 +214,8 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 10,
+      timeLineFlag: false,
+      timeLineList: [],
     };
   },
   methods: {
@@ -235,6 +275,15 @@ export default {
     },
     handleCurrentChange(val) {
       this.getMyOrder(val);
+    },
+    async getTimeLine(orderId) {
+      let result = await getTimeLine(orderId);
+      if (result.code == 200) {
+        this.timeLineList = result.data;
+        this.timeLineFlag = true;
+      } else {
+        this.$message({ type: "warning", message: result.msg });
+      }
     },
   },
   computed: {},

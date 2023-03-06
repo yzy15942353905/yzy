@@ -82,6 +82,7 @@ export default {
           let fu = this.$refs.tree.getHalfCheckedKeys(); //返回选中子节点的父节点的key
           let new1 = zi.concat(fu);
           this.roleForm.roleMenu = new1.join();
+          this.roleForm.newRoleMenu = zi.join();
           let result = await addRole(this.roleForm);
           if (result.code == 200) {
             this.$confirm(result.msg + "是否继续添加角色, 是否继续?", "提示", {

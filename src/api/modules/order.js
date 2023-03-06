@@ -6,32 +6,32 @@
  * @FilePath: \yzy-2\src\api\modules\order.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import request from '../request'
+import request from "../request";
 
 /**
  * @description: 获取我的订单或全部订单，userId为空则为全部
- * @param {*} params userId 
+ * @param {*} params userId
  * @return {*} orderList
  */
 export const getMyOrder = (params) => {
-    return request({
-        url: "/myOrder/page",
-        method: "get",
-        params
-    })
-}
+  return request({
+    url: "/myOrder/page",
+    method: "get",
+    params,
+  });
+};
 /**
  * @description: 下单
  * @param {*} data order对象
  * @return {*} Boolean
  */
 export const submitOrder = (data) => {
-    return request({
-        url: "/myOrder",
-        method: "post",
-        data
-    })
-}
+  return request({
+    url: "/myOrder",
+    method: "post",
+    data,
+  });
+};
 
 /**
  * @description: 取消订单
@@ -39,50 +39,61 @@ export const submitOrder = (data) => {
  * @return {*} Boolean
  */
 export const cancelOrder = (order_id) => {
-    return request({
-        url: `/myOrder/cancelOrder/${order_id}`,
-        method: "post",
-
-    })
-}
+  return request({
+    url: `/myOrder/cancelOrder/${order_id}`,
+    method: "post",
+  });
+};
 /**
  * @description: 删除订单
  * @param {*} order_id
  * @return {*} Boolean
  */
 export const deleteOrder = (order_id) => {
-    return request({
-        url: `/myOrder/del/${order_id}`,
-        method: "post",
-
-    })
-}
+  return request({
+    url: `/myOrder/del/${order_id}`,
+    method: "post",
+  });
+};
 /**
- * @description: 结束订单 
- * @param {*} 
+ * @description: 结束订单
+ * @param {*}
  * order_id
  * returnAddress
  * @return {*} Boolean
  */
 export const finishOrder = (data) => {
-    return request({
-        url: `/myOrder/finishOrder`,
-        method: "post",
-        data
-    })
-}
+  return request({
+    url: `/myOrder/finishOrder`,
+    method: "post",
+    data,
+  });
+};
 
 /**
- * @description: 评价订单 
- * @param {*} 
+ * @description: 评价订单
+ * @param {*}
  * order_id,commentContent,star
  * returnAddress
  * @return {*} Boolean
  */
 export const commentOrder = (data) => {
-    return request({
-        url: `/myOrder/commentOrder`,
-        method: "post",
-        data
-    })
-}
+  return request({
+    url: `/myOrder/commentOrder`,
+    method: "post",
+    data,
+  });
+};
+
+/**
+ * @description: 查看订单时间线
+ * @param {*}  orderId
+ * @return {Array} timeLineList
+ */
+export const getTimeLine = (orderId) => {
+  return request({
+    url: `orderTimeLine/getTimeLineByOrderId/${orderId}`,
+    method: "get",
+
+  });
+};

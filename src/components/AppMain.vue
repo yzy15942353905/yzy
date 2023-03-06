@@ -1,11 +1,13 @@
 <!--
  * @Description: 
  * @Date: 2022-11-28 15:24:06
- * @LastEditTime: 2023-02-01 17:10:29
+ * @LastEditTime: 2023-03-03 10:53:39
  * @FilePath: \vue_test\src\components\AppMain.vue
 -->
 <template>
-  <div style="padding: 15px; box-sizing: border-box; min-height: 666px">
+  <div
+    style="padding: 15px; box-sizing: border-box; min-height: 666px"
+  >
     <TagList />
 
     <transition name="fade-transform" mode="out-in">
@@ -23,5 +25,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

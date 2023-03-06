@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2023-02-06 10:01:51
+ * @LastEditTime: 2023-03-03 15:40:19
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -33,6 +33,9 @@
       </div>
     </div>
     <div style="display: flex; align-items: center">
+      <div style="padding: 0 50px">
+        <el-tag type="danger">{{ userInfo.roleName }}</el-tag>
+      </div>
       <div class="avatar">
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -141,9 +144,10 @@ export default {
 }
 .header .openOrclose {
   padding: 0 50px;
-}
-.header .openOrclose i {
   font-size: 30px;
+}
+.openOrclose {
+  cursor: pointer;
 }
 .avatar {
   padding: 0 10px;

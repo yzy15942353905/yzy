@@ -452,6 +452,7 @@ export default {
         } else {
           this.tableData = result.data.records;
           this.total = result.data.total;
+          this.pageNum = result.data.current
         }
       }
     },

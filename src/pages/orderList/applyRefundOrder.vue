@@ -1,7 +1,7 @@
 <!--
  * @Description:  申请退款订单列表
  * @Date: 2022-11-26 15:47:08
- * @LastEditTime: 2023-03-02 13:45:13
+ * @LastEditTime: 2023-03-03 16:09:14
  * @FilePath: \vue_test\src\pages\role\index.vue
 -->
 <template>
@@ -269,7 +269,7 @@ export default {
     },
     // getRightOrError
     getRightOrError(ifApproval) {
-      return ifApproval == 1 ? "duigou1" : "cuowu";
+      return ifApproval == "同意退款" ? "duigou1" : "cuowu";
     },
   },
   computed: {},

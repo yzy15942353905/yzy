@@ -1,12 +1,12 @@
 /*
  * @Description:
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-03-02 11:04:02
+ * @LastEditTime: 2023-03-03 09:25:09
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from "vue";
 import Router from "vue-router";
-// import { getToken } from "@/utils/auth"
+import { getToken } from "@/utils/auth";
 Vue.use(Router);
 export const constantRoutes = [
   {
@@ -24,6 +24,7 @@ export const constantRoutes = [
         path: "/index",
         component: () => import("@/components"),
         meta: {
+          info: "自行车在线租赁系统",
           icon: "el-icon-s-home",
           hidden: true,
         },
@@ -36,6 +37,7 @@ export const constantRoutes = [
     component: () => import("@/components/Login"),
     meta: {
       hidden: true,
+      info:"登录"
     },
   },
   {
@@ -44,6 +46,7 @@ export const constantRoutes = [
     component: () => import("@/components/Register"),
     meta: {
       hidden: true,
+      info:"注册"
     },
   },
   {
@@ -132,7 +135,7 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "/bicycleList",
+    path: "/bicycleList#",
     name: "自行车租赁#",
     component: () => import("@/components/Layout"),
     meta: {
@@ -178,7 +181,6 @@ export const constantRoutes = [
 
   // }
 ];
-
 export const asyncRoutes = () => [
   {
     id: 1,
@@ -371,11 +373,9 @@ export const asyncRoutes = () => [
 const createRouter = () =>
   new Router({
     routes: constantRoutes,
-    scrollBehavior(to, from, savedPosition) {
-      {
-        y: 0;
-      }
-    },
+    scrollBehavior: () => ({
+      y: 0,
+    }),
   });
 export const router = createRouter();
 
@@ -385,14 +385,15 @@ export const resetRoute = () => {
   router.matcher = newRoute.matcher;
 };
 
-// router.beforeEach((to, from, next) => {
-//     if (to.name == "登录") {
-//         if (getToken()) {
-//             next('/index')
-//         }
-//         else {
-//             next()
-//         }
-//     } else if (to.name !== '登录' && !getToken()) next({ name: '登录', query: { redirect: to.path } })
-//     else next()
-// })
+router.beforeEach((to, from, next) => {
+  if (to.name == "登录") {
+    if (getToken()) {
+      next("/index");
+    } else {
+      next();
+    }
+  }
+  // 根据路由设置标题
+  to.meta.info && (document.title = to.meta.info);
+  next();
+});
