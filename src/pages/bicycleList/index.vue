@@ -2,28 +2,13 @@
  * @Author: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
  * @Date: 2023-01-17 14:35:43
  * @LastEditors: Yz_brightFuture 10409053+yz-brightfuture@user.noreply.gitee.com
- * @LastEditTime: 2023-02-09 14:45:21
+ * @LastEditTime: 2023-03-06 15:19:47
  * @FilePath: \yzy-2\src\pages\bicycleList\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div>
-    <!-- <ul>
-      <li
-        v-for="bicycle in bicycleList"
-        :key="bicycle.id"
-        @click="lookdDetail(bicycle.bicycleId)"
-      >
-        <div class="bicycle_img">
-          <img :src="bicycle.bicycle_image" :alt="bicycle.bicycle_desc" />
-        </div>
-        <div class="bicycleDetail">
-          <div class="bicycle_name">{{ bicycle.bicycleName }}</div>
-          <div class="bicycle_desc">{{ bicycle.bicycleDesc }}</div>
-          <div class="bicycle_price">{{ bicycle.priceHour }} 元起</div>
-        </div>
-      </li>
-    </ul> -->
+    <Search @getSearch="getSearch" />
     <el-row :gutter="20">
       <el-col
         :span="6"
@@ -66,18 +51,6 @@
         </el-card>
       </el-col>
     </el-row>
-    <div class="block pageStyle">
-      <el-pagination
-        @current-change="handleCurrentChange"
-        :page-size="pageSize"
-        :current-page.sync="pageNum"
-        layout="total, prev, pager, next"
-        :total="total"
-        background
-      >
-      </el-pagination>
-      <!-- hide-on-single-page -->
-    </div>
   </div>
 </template>
 
@@ -85,8 +58,10 @@
 import defaultImage from "@/assets/img/default.png";
 import { getBicycleList } from "@/api/modules/bicycle.js";
 import { cancelCollection, collection } from "@/api/modules/collection";
+import Search from "@/components/Search.vue";
 import _ from "lodash";
 export default {
+  components: { Search },
   data() {
     return {
       bicycleList: [],
@@ -94,7 +69,7 @@ export default {
       userId: undefined,
       total: 0,
       pageNum: 1,
-      pageSize: 8,
+      pageSize: 9999,
     };
   },
   methods: {
@@ -165,6 +140,9 @@ export default {
     setDefaultImage(e) {
       e.target.src = defaultImage;
     },
+    getSearch(...args) {
+      console.log("args", args);
+    },
   },
 
   mounted() {
@@ -216,19 +194,16 @@ export default {
   padding: 0;
   float: right;
 }
-
 .image {
   width: 100%;
   aspect-ratio: 1/1;
   display: block;
 }
-
 .clearfix:before,
 .clearfix:after {
   display: table;
   content: "";
 }
-
 .clearfix:after {
   clear: both;
 }

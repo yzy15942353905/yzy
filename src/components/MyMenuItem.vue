@@ -22,7 +22,6 @@
       <el-menu-item
         v-else
         :index="item.path"
-        :key="item.path"
         v-show="!item.meta.hidden"
       >
         <i :class="item.meta.icon"></i>
