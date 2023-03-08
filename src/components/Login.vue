@@ -1,20 +1,12 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2023-03-03 14:10:41
+ * @LastEditTime: 2023-03-08 08:58:16
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
   <div class="wrapper">
-    <div
-      style="
-        margin: 200px auto;
-        background-color: #fff;
-        width: 350px;
-        padding: 20px;
-        border-radius: 10px;
-      "
-    >
+    <div class="main">
       <div style="margin: 20px 0; text-align: center; font-size: 24px">
         <b>登 录</b>
       </div>
@@ -103,7 +95,7 @@ export default {
   components: { SIdentify },
   data() {
     return {
-      safety: "yzm.",
+      safety: "yzm",
       identifyCode: "",
       identifyCodes:
         "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
@@ -147,7 +139,7 @@ export default {
             this.refreshCode();
             this.userForm.password = "";
             this.userForm.yzm = "";
-            this.$message.warning("验证码错误，请重试！");
+            this.$message.error("验证码错误，请重试！");
             return;
           }
           let result = await this.$store.dispatch(
@@ -382,5 +374,14 @@ strong {
     transform: scale(0.75);
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
+}
+
+.main {
+  border-radius: 20px;
+  background: linear-gradient(145deg, #3f5efb, #fc466b);
+  box-shadow: 20px 20px 60px #2f6686, -20px -20px 60px #7bffff;
+  margin: 200px auto;
+  width: 30%;
+  padding: 20px;
 }
 </style>

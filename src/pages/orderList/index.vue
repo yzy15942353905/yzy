@@ -296,4 +296,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="less">
+/deep/ .el-dialog__body {
+  height: 50vh;
+  overflow: auto;
+}
+</style>

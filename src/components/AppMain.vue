@@ -9,7 +9,6 @@
     style="padding: 15px; box-sizing: border-box; min-height: 666px"
   >
     <TagList />
-
     <transition name="fade-transform" mode="out-in">
       <router-view :key="$route.fullPath"></router-view>
     </transition>

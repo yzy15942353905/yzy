@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 14:44:16
- * @LastEditTime: 2023-01-29 14:40:22
+ * @LastEditTime: 2023-03-07 14:12:50
  * @FilePath: \vue_test\src\components\index.vue
 -->
 <template>
@@ -61,7 +61,7 @@ export default {
 
     mainScroll: _.throttle(function () {
       this.$refs["menuClass"].style.opacity = 0.5;
-      this.$refs["menuClass"].style["transition-duration"] = "3s";
+      this.$refs["menuClass"].style.transitionDuration = "3s";
     }, 500),
     MenuEnterEvent() {
       this.$refs["menuClass"].style.opacity == 0.5 &&
