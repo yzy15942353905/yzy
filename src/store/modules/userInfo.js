@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-25 20:33:01
- * @LastEditTime: 2023-03-02 11:00:12
+ * @LastEditTime: 2023-03-14 09:44:56
  * @FilePath: \vue_test\src\store\modules\userInfo.js
  */
 import store from "@/store";

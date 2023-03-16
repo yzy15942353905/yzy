@@ -1,11 +1,10 @@
 /*
- * @Description: 
+ * @Description:
  * @Date: 2022-11-10 14:13:10
  * @LastEditTime: 2022-12-07 15:51:41
  * @FilePath: \vue_test\vue.config.js
  */
 module.exports = {
-
   //打包时去掉map文件
   // productionSourceMap: false,
   transpileDependencies: [],
@@ -13,29 +12,35 @@ module.exports = {
   devServer: {
     proxy: {
       "/api": {
-        target: 'http://localhost:9090/',
+        target: "http://localhost:9090/",
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          '^/api': ''
-        }
+          "^/api": "",
+        },
       },
-    }
+      "/store": {
+        target: "http://3.1.19.14:11111",
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          "^/store": "",
+        },
+      },
+    },
   },
   /* svg 相关配置 */
-  chainWebpack: config => {
-    const svgRule = config.module.rule('svg');
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule("svg");
     // 清空默认svg规则
     svgRule.uses.clear();
     //针对svg文件添加svg-sprite-loader规则
     svgRule
       .test(/\.svg$/)
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
+      .use("svg-sprite-loader")
+      .loader("svg-sprite-loader")
       .options({
-        symbolId: 'icon-[name]'
+        symbolId: "icon-[name]",
       });
   },
-
-
-}
+};

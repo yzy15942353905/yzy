@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-27 15:54:16
- * @LastEditTime: 2023-03-08 08:58:16
+ * @LastEditTime: 2023-03-08 14:11:34
  * @FilePath: \vue_test\src\components\Login.vue
 -->
 <template>
@@ -95,7 +95,7 @@ export default {
   components: { SIdentify },
   data() {
     return {
-      safety: "yzm",
+      safety: "yzm.",
       identifyCode: "",
       identifyCodes:
         "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
@@ -111,6 +111,7 @@ export default {
           {
             pattern: /^1[3|5|7|8|9]\d{9}$/,
             min: 11,
+            max: 11,
             message: "手机号格式不正确",
             trigger: "blur",
           },
@@ -118,7 +119,7 @@ export default {
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
           // {
-          //   min: 1,
+          //   min: 8,
           //   max: 16,
           //   message: "长度在 8 到 16 个字符",
           //   trigger: "blur",

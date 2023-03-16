@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Date: 2022-11-24 14:50:21
- * @LastEditTime: 2023-03-03 09:25:09
+ * @LastEditTime: 2023-03-15 10:50:35
  * @FilePath: \vue_test\src\router\index.js
  */
 import Vue from "vue";
@@ -37,7 +37,7 @@ export const constantRoutes = [
     component: () => import("@/components/Login"),
     meta: {
       hidden: true,
-      info:"登录"
+      info: "登录",
     },
   },
   {
@@ -46,7 +46,7 @@ export const constantRoutes = [
     component: () => import("@/components/Register"),
     meta: {
       hidden: true,
-      info:"注册"
+      info: "注册",
     },
   },
   {
@@ -374,6 +374,7 @@ const createRouter = () =>
   new Router({
     routes: constantRoutes,
     scrollBehavior: () => ({
+      top: 0,
       y: 0,
     }),
   });
@@ -386,6 +387,15 @@ export const resetRoute = () => {
 };
 
 router.beforeEach((to, from, next) => {
+  let bodySrcollTop = document.body.scrollTop;
+  if (bodySrcollTop !== 0) {
+    document.body.scrollTop = 0;
+    return;
+  }
+  let docSrcollTop = document.documentElement.scrollTop;
+  if (docSrcollTop !== 0) {
+    document.documentElement.scrollTop = 0;
+  }
   if (to.name == "登录") {
     if (getToken()) {
       next("/index");

@@ -132,7 +132,7 @@ export default {
       identifyCode: "",
       // 验证码取值
       identifyCodes:
-        "0123456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
+        "023456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ", //绘制的随机数
       userForm: {
         nickName: "",
         phone: "",

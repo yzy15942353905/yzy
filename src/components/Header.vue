@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Date: 2022-11-24 16:08:18
- * @LastEditTime: 2023-03-03 15:40:19
+ * @LastEditTime: 2023-03-08 15:34:58
  * @FilePath: \vue_test\src\components\Header.vue
 -->
 <template>
@@ -52,7 +52,6 @@
             ><el-dropdown-item @click.native="toMyOrder"
               ><span>我的订单</span></el-dropdown-item
             >
-
             <el-dropdown-item @click.native="$router.push('myCoupon')"
               ><span>我的优惠卷</span></el-dropdown-item
             >
